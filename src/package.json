@@ -1,0 +1,64 @@
+{
+  "name": "zhaohuo-dashi",
+  "productName": "找货大师",
+  "version": "3.7.0",
+  "description": "找货大师 - 跨电商平台一键找货",
+  "main": "src/main.js",
+  "author": "ZhaoHuoDaShi",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win --x64",
+    "dist:linux": "electron-builder --linux AppImage"
+  },
+  "build": {
+    "appId": "com.weiwei.zhaohuo",
+    "productName": "找货大师",
+    "artifactName": "ZhaoHuoDaShi-${version}-${os}-${arch}.${ext}",
+    "files": [
+      "src/**/*",
+      "build/icon.png"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png"
+    },
+    "portable": {
+      "artifactName": "ZhaoHuoDaShi-${version}-portable.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "找货大师"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "build/icon.png",
+      "category": "Utility"
+    }
+  },
+  "devDependencies": {
+    "electron": "33.4.11",
+    "electron-builder": "^25.1.8",
+    "remixicon": "^4.9.1"
+  },
+  "dependencies": {
+    "iconv-lite": "^0.7.3",
+    "pinyin-pro": "^3.29.5"
+  }
+}

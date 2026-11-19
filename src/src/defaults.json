@@ -1,0 +1,2384 @@
+[
+ {
+  "id": "taobao",
+  "name": "淘宝",
+  "color": "#ff5000",
+  "home": "https://www.taobao.com/",
+  "search": "https://s.taobao.com/search?q={q}",
+  "login": "https://login.taobao.com/",
+  "loginCookie": {
+   "domain": "taobao.com",
+   "names": [
+    "unb",
+    "_nk_"
+   ]
+  },
+  "partition": "taobao",
+  "capabilities": {
+   "text": true,
+   "image": true,
+   "ai": true
+  },
+  "imageSearch": {
+   "url": "https://s.taobao.com/search?q=",
+   "triggerText": [
+    "搜同款",
+    "拍立淘",
+    "拍照搜索",
+    "拍照"
+   ],
+   "trigger": "[class*=image-search],[class*=imgsearch],[class*=camera]",
+   "mobileUrl": "https://main.m.taobao.com/search/index.html?q="
+  },
+  "aiSearch": {
+   "url": "https://s.taobao.com/search?q={q}&tab=ai",
+   "note": "淘宝 AI 助手（问问）需登录，可在页面中点“问问”继续对话"
+  },
+  "note": "",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": "https://main.m.taobao.com/",
+  "mobileSearch": "https://main.m.taobao.com/search/index.html?q={q}",
+  "mobileLogin": "https://login.m.taobao.com/login.htm",
+  "logo": "assets/platforms/taobao.png",
+  "category": "general"
+ },
+ {
+  "id": "tmall",
+  "name": "天猫",
+  "color": "#ff0036",
+  "home": "https://www.tmall.com/",
+  "search": "https://s.taobao.com/search?q={q}&tab=mall",
+  "login": "https://login.tmall.com/",
+  "loginCookie": {
+   "domain": "taobao.com",
+   "names": [
+    "unb",
+    "_nk_"
+   ]
+  },
+  "partition": "taobao",
+  "capabilities": {
+   "text": true,
+   "image": true,
+   "ai": false
+  },
+  "imageSearch": {
+   "url": "https://s.taobao.com/search?q=",
+   "triggerText": [
+    "搜同款",
+    "拍立淘",
+    "拍照搜索",
+    "拍照"
+   ],
+   "mobileUrl": "https://main.m.taobao.com/search/index.html?q="
+  },
+  "aiSearch": null,
+  "note": "天猫搜索为淘宝“天猫”标签，与淘宝共享登录",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": "https://main.m.taobao.com/",
+  "mobileSearch": "https://main.m.taobao.com/search/index.html?q={q}&tab=mall",
+  "mobileLogin": "https://login.m.taobao.com/login.htm",
+  "logo": "assets/platforms/tmall.png",
+  "category": "general"
+ },
+ {
+  "id": "tmallcs",
+  "name": "天猫超市",
+  "color": "#00b386",
+  "home": "https://chaoshi.tmall.com/",
+  "search": "https://s.taobao.com/search?q={q}%20%E5%A4%A9%E7%8C%AB%E8%B6%85%E5%B8%82&tab=mall",
+  "login": "https://login.tmall.com/",
+  "loginCookie": {
+   "domain": "taobao.com",
+   "names": [
+    "unb",
+    "_nk_"
+   ]
+  },
+  "partition": "taobao",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "天猫超市无独立网页搜索，使用天猫搜索+“天猫超市”关键词",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": "https://main.m.taobao.com/",
+  "mobileSearch": "https://main.m.taobao.com/search/index.html?q={q}%20%E5%A4%A9%E7%8C%AB%E8%B6%85%E5%B8%82",
+  "mobileLogin": "https://login.m.taobao.com/login.htm",
+  "logo": "assets/platforms/tmallcs.png",
+  "category": "vertical"
+ },
+ {
+  "id": "jd",
+  "name": "京东",
+  "color": "#e1251b",
+  "home": "https://www.jd.com/",
+  "search": "https://search.jd.com/Search?keyword={q}&enc=utf-8",
+  "login": "https://passport.jd.com/new/login.aspx",
+  "loginCookie": {
+   "domain": "jd.com",
+   "names": [
+    "pin",
+    "pt_pin",
+    "thor"
+   ]
+  },
+  "partition": "jd",
+  "capabilities": {
+   "text": true,
+   "image": true,
+   "ai": "manual"
+  },
+  "imageSearch": {
+   "url": "https://www.jd.com/",
+   "triggerText": [
+    "拍照购",
+    "图片搜索",
+    "拍照搜索",
+    "拍立淘",
+    "拍照"
+   ],
+   "trigger": "[class*=photo-search],[class*=camera]",
+   "mobileUrl": "https://so.m.jd.com/ware/search.action?keyword="
+  },
+  "aiSearch": {
+   "url": "https://so.m.jd.com/ware/search.action?keyword={q}",
+   "note": "京东 AI 助手（京言）入口在京东 App 内，网页端已按需求关键词搜索"
+  },
+  "note": "",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": "https://m.jd.com/",
+  "mobileSearch": "https://so.m.jd.com/ware/search.action?keyword={q}",
+  "mobileLogin": "https://plogin.m.jd.com/login/login",
+  "logo": "assets/platforms/jd.png",
+  "category": "general"
+ },
+ {
+  "id": "jddj",
+  "name": "京东秒送",
+  "color": "#00b354",
+  "home": "https://daojia.jd.com/",
+  "search": null,
+  "login": "https://daojia.jd.com/",
+  "loginCookie": {
+   "domain": "jd.com",
+   "names": [
+    "pt_pin",
+    "pin"
+   ]
+  },
+  "partition": "jd",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "京东到家无网页搜索URL，打开首页后粘贴关键词",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": "https://daojia.jd.com/",
+  "mobileSearch": null,
+  "mobileLogin": "https://plogin.m.jd.com/login/login",
+  "logo": "assets/platforms/jddj.png",
+  "category": "local"
+ },
+ {
+  "id": "pdd",
+  "name": "拼多多",
+  "color": "#e02e24",
+  "home": "https://mobile.yangkeduo.com/",
+  "search": "https://mobile.yangkeduo.com/search_result.html?search_key={q}",
+  "login": "https://mobile.yangkeduo.com/login.html",
+  "loginCookie": {
+   "domain": "yangkeduo.com",
+   "names": [
+    "PDDAccessToken",
+    "pdd_user_id"
+   ]
+  },
+  "partition": "pdd",
+  "capabilities": {
+   "text": true,
+   "image": "manual",
+   "ai": false
+  },
+  "imageSearch": {
+   "url": "https://mobile.yangkeduo.com/",
+   "mobileUrl": "https://mobile.yangkeduo.com/",
+   "triggerText": [
+    "拍照搜索",
+    "拍立淘",
+    "拍照"
+   ]
+  },
+  "aiSearch": null,
+  "note": "拼多多仅有移动网页版（电脑端模式也使用移动页面）；搜索需登录",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "mobile",
+  "mobileHome": "https://mobile.yangkeduo.com/",
+  "mobileSearch": "https://mobile.yangkeduo.com/search_result.html?search_key={q}",
+  "mobileLogin": "https://mobile.yangkeduo.com/login.html",
+  "logo": "assets/platforms/pdd.png",
+  "category": "general"
+ },
+ {
+  "id": "1688",
+  "name": "1688",
+  "color": "#ff6a00",
+  "home": "https://www.1688.com/",
+  "search": "https://s.1688.com/selloffer/offer_search.htm?keywords={q}&charset=utf8",
+  "login": "https://login.1688.com/",
+  "loginCookie": {
+   "domain": "1688.com",
+   "names": [
+    "__cn_logon__",
+    "unb"
+   ]
+  },
+  "partition": "1688",
+  "capabilities": {
+   "text": true,
+   "image": true,
+   "ai": "manual"
+  },
+  "imageSearch": {
+   "url": "https://www.1688.com/",
+   "triggerText": [
+    "以图搜货",
+    "图片搜索",
+    "拍照",
+    "拍照搜索",
+    "拍立淘"
+   ],
+   "trigger": "[class*=img-search],[class*=image-search],[class*=camera]",
+   "mobileUrl": "https://m.1688.com/"
+  },
+  "aiSearch": {
+   "url": "https://s.1688.com/selloffer/offer_search.htm?keywords={q}&charset=utf8",
+   "note": "1688 AI 找货需登录，请点击页面 AI 入口"
+  },
+  "note": "",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": "https://m.1688.com/",
+  "mobileSearch": "https://m.1688.com/offer_search/-6D7033.html?keywords={q}",
+  "mobileLogin": "https://login.m.1688.com/",
+  "logo": "assets/platforms/1688.png",
+  "category": "wholesale",
+  "industry": "综合"
+ },
+ {
+  "id": "douyin",
+  "name": "抖音商城",
+  "color": "#1f1f1f",
+  "home": "https://www.douyin.com/",
+  "search": "https://www.douyin.com/search/{q}?type=general",
+  "login": "https://www.douyin.com/",
+  "loginCookie": {
+   "domain": "douyin.com",
+   "names": [
+    "sessionid",
+    "sid_tt"
+   ]
+  },
+  "partition": "douyin",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "抖音商城无公开网页商品搜索，使用抖音网页搜索（无独立移动搜索页，移动模式沿用网页版链接）",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/douyin.png",
+  "category": "content"
+ },
+ {
+  "id": "kuaishou",
+  "name": "快手小店",
+  "color": "#ff4906",
+  "home": "https://www.kuaishou.com/",
+  "search": "https://www.kuaishou.com/search/video?searchKey={q}",
+  "login": "https://www.kuaishou.com/",
+  "loginCookie": {
+   "domain": "kuaishou.com",
+   "names": [
+    "userId",
+    "kuaishou.server.web_st"
+   ]
+  },
+  "partition": "kuaishou",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "快手小店无网页商品搜索，使用快手网页搜索",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": "https://m.kuaishou.com/",
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/kuaishou.png",
+  "category": "content"
+ },
+ {
+  "id": "xhs",
+  "name": "小红书",
+  "color": "#ff2442",
+  "home": "https://www.xiaohongshu.com/",
+  "search": "https://www.xiaohongshu.com/search_result/?keyword={q}&source=web_search_result_notes",
+  "login": "https://www.xiaohongshu.com/",
+  "loginCookie": {
+   "domain": "xiaohongshu.com",
+   "names": [
+    "web_session"
+   ]
+  },
+  "partition": "xhs",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "小红书移动网页搜索会显示“页面不见了”，默认使用电脑端",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": "https://www.xiaohongshu.com/",
+  "mobileSearch": "https://www.xiaohongshu.com/search_result/?keyword={q}&source=web_search_result_notes",
+  "mobileLogin": null,
+  "logo": "assets/platforms/xhs.png",
+  "category": "content"
+ },
+ {
+  "id": "xianyu",
+  "name": "闲鱼",
+  "color": "#ffc300",
+  "home": "https://www.goofish.com/",
+  "search": "https://www.goofish.com/search?q={q}",
+  "login": "https://www.goofish.com/",
+  "loginCookie": {
+   "domain": "goofish.com",
+   "names": [
+    "unb"
+   ]
+  },
+  "partition": "taobao",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "（无独立移动搜索页，移动模式沿用网页版链接）",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/xianyu.png",
+  "category": "secondhand"
+ },
+ {
+  "id": "zhuanzhuan",
+  "name": "转转",
+  "color": "#ff483b",
+  "home": "https://m.zhuanzhuan.com/",
+  "search": null,
+  "login": "https://m.zhuanzhuan.com/",
+  "loginCookie": {
+   "domain": "zhuanzhuan.com",
+   "names": [
+    "uid",
+    "tk"
+   ]
+  },
+  "partition": "zhuanzhuan",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "转转网页搜索链接已失效（404），打开首页后粘贴关键词",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": "https://m.zhuanzhuan.com/",
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/zhuanzhuan.png",
+  "category": "secondhand"
+ },
+ {
+  "id": "vip",
+  "name": "唯品会",
+  "color": "#f10180",
+  "home": "https://www.vip.com/",
+  "search": "https://category.vip.com/suggest.php?keyword={q}",
+  "login": "https://passport.vip.com/login",
+  "loginCookie": {
+   "domain": "vip.com",
+   "names": [
+    "PASSPORT_ACCESS_TOKEN",
+    "VipUID"
+   ]
+  },
+  "partition": "vip",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": "https://m.vip.com/",
+  "mobileSearch": "https://m.vip.com/searchlist.html?keyword={q}",
+  "mobileLogin": "https://passport.vip.com/login",
+  "logo": "assets/platforms/vip.png",
+  "category": "general"
+ },
+ {
+  "id": "suning",
+  "name": "苏宁易购",
+  "color": "#ffaa00",
+  "home": "https://www.suning.com/",
+  "search": "https://search.suning.com/{q}/",
+  "login": "https://passport.suning.com/ids/login",
+  "loginCookie": {
+   "domain": "suning.com",
+   "names": [
+    "custno",
+    "idsLoginUserIdLastTime"
+   ]
+  },
+  "partition": "suning",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": "https://m.suning.com/",
+  "mobileSearch": "https://m.suning.com/search/{q}/",
+  "mobileLogin": null,
+  "logo": "assets/platforms/suning.png",
+  "category": "general"
+ },
+ {
+  "id": "dangdang",
+  "name": "当当",
+  "color": "#e42c2c",
+  "home": "https://www.dangdang.com/",
+  "search": "https://search.dangdang.com/?key={q}&act=input",
+  "login": "https://login.dangdang.com/",
+  "loginCookie": {
+   "domain": "dangdang.com",
+   "names": [
+    "sessionID",
+    "login.dangdang.com"
+   ]
+  },
+  "partition": "dangdang",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": "https://m.dangdang.com/",
+  "mobileSearch": "https://search.m.dangdang.com/search.php?keyword={q}",
+  "mobileLogin": "https://login.m.dangdang.com/",
+  "logo": "assets/platforms/dangdang.png",
+  "category": "vertical"
+ },
+ {
+  "id": "dewu",
+  "name": "得物",
+  "color": "#0e0e0e",
+  "home": "https://www.dewu.com/",
+  "search": null,
+  "login": "https://www.dewu.com/",
+  "loginCookie": {
+   "domain": "dewu.com",
+   "names": [
+    "x-auth-token"
+   ]
+  },
+  "partition": "dewu",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "得物网页版不支持搜索参数，打开首页后粘贴关键词",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/dewu.png",
+  "category": "vertical"
+ },
+ {
+  "id": "yanxuan",
+  "name": "网易严选",
+  "color": "#b4a078",
+  "home": "https://you.163.com/",
+  "search": "https://you.163.com/search?keyword={q}",
+  "login": "https://you.163.com/",
+  "loginCookie": {
+   "domain": "163.com",
+   "names": [
+    "NTES_YD_SESS"
+   ]
+  },
+  "partition": "yanxuan",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": "https://m.you.163.com/",
+  "mobileSearch": "https://m.you.163.com/search?keyword={q}",
+  "mobileLogin": null,
+  "logo": "assets/platforms/yanxuan.png",
+  "category": "vertical"
+ },
+ {
+  "id": "weidian",
+  "name": "微店",
+  "color": "#e5391d",
+  "home": "https://weidian.com/",
+  "search": null,
+  "login": "https://sso.weidian.com/login/index.php",
+  "loginCookie": {
+   "domain": "weidian.com",
+   "names": [
+    "wduss",
+    "is_login"
+   ]
+  },
+  "partition": "weidian",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "微店无全站网页搜索（/search 返回404），打开首页后粘贴关键词",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": "https://m.weidian.com/",
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/weidian.png",
+  "category": "content"
+ },
+ {
+  "id": "gome",
+  "name": "国美",
+  "color": "#d50000",
+  "home": "https://www.gome.com.cn/",
+  "search": null,
+  "login": "https://login.gome.com.cn/",
+  "loginCookie": {
+   "domain": "gome.com.cn",
+   "names": [
+    "SSO_USER_ID"
+   ]
+  },
+  "partition": "gome",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "国美网页商城已收缩（搜索跳转企业站），默认隐藏",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": "https://m.gome.com.cn/",
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/gome.png",
+  "category": "general"
+ },
+ {
+  "id": "meituan",
+  "name": "美团/闪购",
+  "color": "#ffc300",
+  "home": "https://www.meituan.com/",
+  "search": null,
+  "login": "https://passport.meituan.com/account/unitivelogin",
+  "loginCookie": {
+   "domain": "meituan.com",
+   "names": [
+    "token",
+    "mt_c_token"
+   ]
+  },
+  "partition": "meituan",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "美团网页版无搜索URL（/s/ 已404），打开首页后粘贴关键词",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": "https://i.meituan.com/",
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/meituan.png",
+  "category": "local"
+ },
+ {
+  "id": "eleme",
+  "name": "饿了么",
+  "color": "#0097ff",
+  "home": "https://h5.ele.me/",
+  "search": null,
+  "login": "https://h5.ele.me/login/",
+  "loginCookie": {
+   "domain": "ele.me",
+   "names": [
+    "USERID",
+    "SID"
+   ]
+  },
+  "partition": "eleme",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "饿了么仅有 H5，需定位与登录",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": "https://h5.ele.me/",
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/eleme.png",
+  "category": "local"
+ },
+ {
+  "id": "yiwugo",
+  "name": "义乌购",
+  "color": "#ff6600",
+  "home": "https://www.yiwugo.com/",
+  "search": "https://www.yiwugo.com/search/s.html?q={q}",
+  "login": "https://www.yiwugo.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "yiwugo",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "义乌国际商贸城官方网上市场，小商品批发",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "category": "wholesale",
+  "logo": "assets/platforms/yiwugo.png",
+  "industry": "小商品"
+ },
+ {
+  "id": "zwd17",
+  "name": "17网",
+  "color": "#ff3c3c",
+  "home": "https://gz.17zwd.com/",
+  "search": "https://gz.17zwd.com/sks.htm?so={q:gbk}",
+  "login": "https://gz.17zwd.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "zwd17",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "一起做网店（广州服装货源），关键词为 GBK 编码",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "category": "wholesale",
+  "logo": "assets/platforms/zwd17.png",
+  "industry": "服装"
+ },
+ {
+  "id": "vvic",
+  "name": "搜款网",
+  "color": "#ff4f6b",
+  "home": "https://www.vvic.com/",
+  "search": "https://www.vvic.com/gz/search/index.html?q={q}",
+  "login": "https://www.vvic.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "vvic",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "广州服装一手货源",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "category": "wholesale",
+  "logo": "assets/platforms/vvic.png",
+  "industry": "服装"
+ },
+ {
+  "id": "mic",
+  "name": "中国制造网",
+  "color": "#d40000",
+  "home": "https://cn.made-in-china.com/",
+  "search": "https://cn.made-in-china.com/productdirectory.do?word={q:gbk}&subaction=hunt&style=b&mode=and&code=0",
+  "login": "https://cn.made-in-china.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "mic",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "内贸工厂直供，关键词为 GBK 编码",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "category": "wholesale",
+  "logo": "assets/platforms/mic.png",
+  "industry": "综合"
+ },
+ {
+  "id": "hc360",
+  "name": "慧聪网",
+  "color": "#ffb400",
+  "home": "https://www.hc360.com/",
+  "search": "https://s.hc360.com/seller/search.html?kwd={q}",
+  "login": "https://www.hc360.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "hc360",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "B2B 供应商平台（测试网络无法访问，未验证）",
+  "enabled": true,
+  "builtin": true,
+  "verified": false,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "category": "wholesale",
+  "logo": "assets/platforms/hc360.png",
+  "industry": "综合"
+ },
+ {
+  "id": "wsy",
+  "name": "网商园",
+  "color": "#1e88ff",
+  "home": "https://www.wsy.com/",
+  "search": "https://www.wsy.com/search.html?keyword={q}",
+  "login": "https://www.wsy.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "wsy",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "鞋类货源（测试网络无法访问，搜索链接未验证）",
+  "enabled": false,
+  "builtin": true,
+  "verified": false,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "category": "wholesale",
+  "logo": "assets/platforms/wsy.png",
+  "industry": "服装"
+ },
+ {
+  "id": "bao66",
+  "name": "包牛牛",
+  "color": "#2a62c9",
+  "home": "https://www.bao66.cn/",
+  "search": null,
+  "login": "https://www.bao66.cn/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "bao66",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "箱包货源，无公开搜索链接（测试网络返回 401）",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "category": "wholesale",
+  "logo": "assets/platforms/bao66.png",
+  "industry": "鞋包"
+ },
+ {
+  "id": "go2",
+  "name": "购途网",
+  "color": "#333333",
+  "home": "https://www.go2.cn/",
+  "search": null,
+  "login": "https://www.go2.cn/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "go2",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "成都女鞋货源，搜索链接不公开",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "category": "wholesale",
+  "logo": "assets/platforms/go2.png",
+  "industry": "鞋包"
+ },
+ {
+  "id": "xz571",
+  "name": "四季星座网",
+  "color": "#ff5a00",
+  "home": "https://www.571xz.com/",
+  "search": null,
+  "login": "https://www.571xz.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "xz571",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "杭州四季青服装货源，搜索需在站内进行",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "category": "wholesale",
+  "logo": "assets/platforms/xz571.png",
+  "industry": "服装"
+ },
+ {
+  "id": "dianping",
+  "name": "大众点评",
+  "color": "#ff6633",
+  "home": "https://www.dianping.com/",
+  "search": "https://www.dianping.com/search/keyword/1/0_{q}",
+  "login": "https://www.dianping.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "dianping",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "本地商户/团购；境外访问会跳美团安全验证，需在“原网页”中完成验证或登录",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/dianping.png",
+  "category": "local",
+  "needLogin": true
+ },
+ {
+  "id": "hema",
+  "name": "盒马",
+  "color": "#1a8cff",
+  "home": "https://www.freshhema.com/",
+  "search": null,
+  "login": "https://www.freshhema.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "hema",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "盒马主要在App/小程序下单，网页无搜索，打开官网后手动查看",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/hema.png",
+  "category": "local",
+  "needLogin": false
+ },
+ {
+  "id": "dingdong",
+  "name": "叮咚买菜",
+  "color": "#2db84d",
+  "home": "https://www.100.me/",
+  "search": null,
+  "login": "https://www.100.me/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "dingdong",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "叮咚买菜仅App/小程序可搜，网页仅首页",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/dingdong.png",
+  "category": "local",
+  "needLogin": false
+ },
+ {
+  "id": "pupu",
+  "name": "朴朴超市",
+  "color": "#16b45a",
+  "home": "https://www.pupumall.com/",
+  "search": null,
+  "login": "https://www.pupumall.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "pupu",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "朴朴仅App可搜，网页仅首页",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/pupu.png",
+  "category": "local",
+  "needLogin": false
+ },
+ {
+  "id": "dmall",
+  "name": "多点",
+  "color": "#ff6a00",
+  "home": "https://www.dmall.com/",
+  "search": null,
+  "login": "https://www.dmall.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "dmall",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "多点（物美等）仅App/小程序可搜",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/dmall.png",
+  "category": "local",
+  "needLogin": false
+ },
+ {
+  "id": "xiaoxiang",
+  "name": "小象超市",
+  "color": "#ffc300",
+  "home": "https://i.meituan.com/",
+  "search": null,
+  "login": "https://i.meituan.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "xiaoxiang",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "美团小象超市（原美团买菜/优选）仅App/小程序可搜，网页打开美团H5",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/xiaoxiang.png",
+  "category": "local",
+  "needLogin": true
+ },
+ {
+  "id": "sams",
+  "name": "山姆会员店",
+  "color": "#0067a0",
+  "home": "https://www.samsclub.cn/",
+  "search": null,
+  "login": "https://www.samsclub.cn/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "sams",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "山姆网页无搜索，需App/小程序；可在原网页查看",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/sams.png",
+  "category": "local",
+  "needLogin": true
+ },
+ {
+  "id": "walmart",
+  "name": "沃尔玛",
+  "color": "#0071ce",
+  "home": "https://www.walmart.cn/",
+  "search": null,
+  "login": "https://www.walmart.cn/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "walmart",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "沃尔玛到家仅小程序/京东秒送可搜",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/walmart.png",
+  "category": "local",
+  "needLogin": false
+ },
+ {
+  "id": "jingxi",
+  "name": "京喜",
+  "color": "#e1251b",
+  "home": "https://www.jingxi.com/",
+  "search": "https://search.jd.com/Search?keyword={q}&jx=1",
+  "login": "https://www.jingxi.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "jingxi",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "京喜（京东低价）走京东搜索，需登录",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": "https://so.m.jd.com/ware/search.action?keyword={q}",
+  "mobileLogin": null,
+  "logo": "assets/platforms/jingxi.png",
+  "category": "general",
+  "needLogin": true
+ },
+ {
+  "id": "mogujie",
+  "name": "蘑菇街",
+  "color": "#ff4466",
+  "home": "https://www.mogujie.com/",
+  "search": "https://list.mogujie.com/s?q={q}",
+  "login": "https://www.mogujie.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "mogujie",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "女装直播电商",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/mogujie.png",
+  "category": "content",
+  "needLogin": false
+ },
+ {
+  "id": "wxshop",
+  "name": "微信小店",
+  "color": "#07c160",
+  "home": "https://store.weixin.qq.com/",
+  "search": null,
+  "login": "https://store.weixin.qq.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "wxshop",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "微信小店/视频号商品仅在微信内可搜，网页为商家后台",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/wxshop.png",
+  "category": "content",
+  "needLogin": true
+ },
+ {
+  "id": "jdhealth",
+  "name": "京东健康",
+  "color": "#e1251b",
+  "home": "https://www.jd.com/",
+  "search": "https://search.jd.com/Search?keyword={q}&wtype=1&pvid=health",
+  "login": "https://www.jd.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "jdhealth",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "医药健康，走京东搜索，需登录",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": "https://so.m.jd.com/ware/search.action?keyword={q}",
+  "mobileLogin": null,
+  "logo": "assets/platforms/jdhealth.png",
+  "category": "vertical",
+  "needLogin": true
+ },
+ {
+  "id": "alihealth",
+  "name": "阿里健康",
+  "color": "#ff6a00",
+  "home": "https://www.alihealth.cn/",
+  "search": "https://list.tmall.com/search_product.htm?q={q}",
+  "login": "https://www.alihealth.cn/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "alihealth",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "阿里健康大药房（天猫），需淘宝登录",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/alihealth.png",
+  "category": "vertical",
+  "needLogin": true
+ },
+ {
+  "id": "yao111",
+  "name": "1药网",
+  "color": "#e60012",
+  "home": "https://www.111.com.cn/",
+  "search": null,
+  "login": "https://www.111.com.cn/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "yao111",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "1药网旧搜索地址已404，打开首页手动搜索",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/yao111.png",
+  "category": "vertical",
+  "needLogin": false
+ },
+ {
+  "id": "benlai",
+  "name": "本来生活",
+  "color": "#8cc63f",
+  "home": "https://www.benlai.com/",
+  "search": null,
+  "login": "https://www.benlai.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "benlai",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "生鲜电商；网页搜索地址已404，打开首页手动搜索",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/benlai.png",
+  "category": "vertical",
+  "needLogin": false
+ },
+ {
+  "id": "bookschina",
+  "name": "中图网",
+  "color": "#c8102e",
+  "home": "https://www.bookschina.com/",
+  "search": "https://www.bookschina.com/book_find2/?stp={q}",
+  "login": "https://www.bookschina.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "bookschina",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "图书特价；搜索需登录",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/bookschina.png",
+  "category": "vertical",
+  "needLogin": true
+ },
+ {
+  "id": "tmallhk",
+  "name": "天猫国际",
+  "color": "#ff0036",
+  "home": "https://www.tmall.hk/",
+  "search": "https://list.tmall.hk/search_product.htm?q={q}",
+  "login": "https://www.tmall.hk/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "tmallhk",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "跨境进口，需淘宝登录",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/tmallhk.png",
+  "category": "crossborder",
+  "needLogin": true
+ },
+ {
+  "id": "jdhk",
+  "name": "京东国际",
+  "color": "#e1251b",
+  "home": "https://www.jd.hk/",
+  "search": "https://search.jd.hk/Search?keyword={q}",
+  "login": "https://www.jd.hk/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "jdhk",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "跨境进口",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/jdhk.png",
+  "category": "crossborder",
+  "needLogin": true
+ },
+ {
+  "id": "kongfz",
+  "name": "孔夫子旧书网",
+  "color": "#8b1a1a",
+  "home": "https://www.kongfz.com/",
+  "search": "https://search.kongfz.com/product_result/?key={q}",
+  "login": "https://www.kongfz.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "kongfz",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "二手书；搜索需登录",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/kongfz.png",
+  "category": "secondhand",
+  "needLogin": true
+ },
+ {
+  "id": "paipai",
+  "name": "拍拍二手",
+  "color": "#c6ff00",
+  "home": "https://paipai.jd.com/",
+  "search": "https://search.jd.com/Search?keyword={q}%20%E4%BA%8C%E6%89%8B",
+  "login": "https://paipai.jd.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "paipai",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "京东二手，走京东搜索，需登录",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/paipai.png",
+  "category": "secondhand",
+  "needLogin": true
+ },
+ {
+  "id": "aihuishou",
+  "name": "爱回收",
+  "color": "#ffd500",
+  "home": "https://www.aihuishou.com/",
+  "search": null,
+  "login": "https://www.aihuishou.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "aihuishou",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "回收估价/优品，网页无搜索URL",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/aihuishou.png",
+  "category": "secondhand",
+  "needLogin": false
+ },
+ {
+  "id": "aicaigou",
+  "name": "百度爱采购",
+  "color": "#e10601",
+  "home": "https://b2b.baidu.com/",
+  "search": "https://b2b.baidu.com/s?q={q}",
+  "login": "https://b2b.baidu.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "aicaigou",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "百度B2B采购聚合（境外访问403）",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/aicaigou.png",
+  "category": "wholesale",
+  "needLogin": false,
+  "industry": "综合"
+ },
+ {
+  "id": "pddpifa",
+  "name": "拼多多批发",
+  "color": "#e02e24",
+  "home": "https://pifa.pinduoduo.com/",
+  "search": null,
+  "login": "https://pifa.pinduoduo.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "pddpifa",
+  "capabilities": {
+   "text": "manual",
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "拼多多批发仅App内可搜，网页仅首页",
+  "enabled": false,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/pddpifa.png",
+  "category": "wholesale",
+  "needLogin": true,
+  "industry": "综合"
+ },
+ {
+  "id": "dhgate",
+  "name": "敦煌网",
+  "color": "#f2711c",
+  "home": "https://www.dhgate.com/",
+  "search": "https://www.dhgate.com/wholesale/search.do?searchkey={q}",
+  "login": "https://www.dhgate.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "dhgate",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "跨境B2B批发（境外访问403）",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/dhgate.png",
+  "category": "wholesale",
+  "needLogin": false,
+  "industry": "综合"
+ },
+ {
+  "id": "globalsources",
+  "name": "环球资源",
+  "color": "#e60012",
+  "home": "https://www.globalsources.com/",
+  "search": "https://www.globalsources.com/searchList/products?keyWord={q}",
+  "login": "https://www.globalsources.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "globalsources",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "跨境B2B批发（英文站，仅支持英文关键词，中文词会 404；美元价按 1 USD≈7.1 元折算）",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/globalsources.png",
+  "category": "wholesale",
+  "needLogin": false,
+  "industry": "综合"
+ },
+ {
+  "id": "hqchip",
+  "name": "华秋商城",
+  "color": "#d71920",
+  "home": "https://www.hqchip.com/",
+  "search": "https://www.hqchip.com/search/{q}.html",
+  "login": "https://www.hqchip.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "hqchip",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "电子元器件批发/采购",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/hqchip.png",
+  "category": "wholesale",
+  "industry": "电子元器件",
+  "needLogin": false
+ },
+ {
+  "id": "ickey",
+  "name": "云汉芯城",
+  "color": "#1d3f8f",
+  "home": "https://www.ickey.cn/",
+  "search": "https://search.ickey.cn/site/index.html?keyword={q}",
+  "login": "https://www.ickey.cn/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "ickey",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "电子元器件批发/采购",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/ickey.png",
+  "category": "wholesale",
+  "industry": "电子元器件",
+  "needLogin": false
+ },
+ {
+  "id": "szlcsc",
+  "name": "立创商城",
+  "color": "#1677d2",
+  "home": "https://www.szlcsc.com/",
+  "search": "https://so.szlcsc.com/global.html?k={q}",
+  "login": "https://www.szlcsc.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "szlcsc",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "电子元器件批发/采购",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/szlcsc.png",
+  "category": "wholesale",
+  "industry": "电子元器件",
+  "needLogin": false
+ },
+ {
+  "id": "hqew",
+  "name": "华强电子网",
+  "color": "#1e4fa0",
+  "home": "https://www.hqew.com/",
+  "search": "https://s.hqew.com/{q}.html",
+  "login": "https://www.hqew.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "hqew",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "电子元器件批发/采购",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/hqew.png",
+  "category": "wholesale",
+  "industry": "电子元器件",
+  "needLogin": true
+ },
+ {
+  "id": "ehsy",
+  "name": "西域",
+  "color": "#00703c",
+  "home": "https://www.ehsy.com/",
+  "search": "https://www.ehsy.com/search?k={q}",
+  "login": "https://www.ehsy.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "ehsy",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "五金工具批发/采购",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/ehsy.png",
+  "category": "wholesale",
+  "industry": "五金工具",
+  "needLogin": false
+ },
+ {
+  "id": "zkh",
+  "name": "震坤行",
+  "color": "#111111",
+  "home": "https://www.zkh.com/",
+  "search": "https://www.zkh.com/search.html?keywords={q}",
+  "login": "https://www.zkh.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "zkh",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "五金工具批发/采购",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/zkh.png",
+  "category": "wholesale",
+  "industry": "五金工具",
+  "needLogin": false
+ },
+ {
+  "id": "mysteel",
+  "name": "我的钢铁网",
+  "color": "#c8161d",
+  "home": "https://www.mysteel.com/",
+  "search": "https://search.mysteel.com/so.html?kw={q}",
+  "login": "https://www.mysteel.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "mysteel",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "钢铁建材批发/采购",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/mysteel.png",
+  "category": "wholesale",
+  "industry": "钢铁建材",
+  "needLogin": false
+ },
+ {
+  "id": "chemnet",
+  "name": "化工网",
+  "color": "#1b6fb5",
+  "home": "https://china.chemnet.com/",
+  "search": "https://china.chemnet.com/product/search.cgi?skey={q}&use_cas=0",
+  "login": "https://china.chemnet.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "chemnet",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "化工塑料批发/采购",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/chemnet.png",
+  "category": "wholesale",
+  "industry": "化工塑料",
+  "needLogin": false
+ },
+ {
+  "id": "texindex",
+  "name": "中国纺织网",
+  "color": "#e60012",
+  "home": "https://www.texindex.com.cn/",
+  "search": "https://www.texindex.com.cn/search/?q={q}",
+  "login": "https://www.texindex.com.cn/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "texindex",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "纺织面料批发/采购",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/texindex.png",
+  "category": "wholesale",
+  "industry": "纺织面料",
+  "needLogin": false
+ },
+ {
+  "id": "ymt",
+  "name": "一亩田",
+  "color": "#0a9a6b",
+  "home": "https://www.ymt.com/",
+  "search": "https://www.ymt.com/supplylist/{q:py}",
+  "login": "https://www.ymt.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "ymt",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "食品农产品批发/采购",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/ymt.png",
+  "category": "wholesale",
+  "industry": "食品农产品",
+  "needLogin": false,
+  "relevant": true
+ },
+ {
+  "id": "cnhnb",
+  "name": "惠农网",
+  "color": "#3bb43b",
+  "home": "https://www.cnhnb.com/",
+  "search": "https://www.cnhnb.com/p/?k={q}",
+  "login": "https://www.cnhnb.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "cnhnb",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "农产品B2B批发：产地直供果蔬、中药材、茶叶、畜禽水产",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/cnhnb.png",
+  "category": "wholesale",
+  "industry": "食品农产品",
+  "needLogin": false
+ },
+ {
+  "id": "gongchang",
+  "name": "世界工厂网",
+  "color": "#2a8f3c",
+  "home": "https://www.gongchang.com/",
+  "search": "https://chanpin.gongchang.com/search.php?kw={q}",
+  "login": "https://www.gongchang.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "gongchang",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "综合批发/采购",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/gongchang.png",
+  "category": "wholesale",
+  "industry": "综合",
+  "needLogin": false
+ },
+ {
+  "id": "3e3e",
+  "name": "3E女装",
+  "color": "#ff4400",
+  "home": "https://www.3e3e.cn/",
+  "search": "https://www.3e3e.cn/search?keyword={q}",
+  "login": "https://www.3e3e.cn/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "3e3e",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "服装批发/采购",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/3e3e.png",
+  "category": "wholesale",
+  "industry": "服装",
+  "needLogin": true
+ },
+ {
+  "id": "cnxieku",
+  "name": "鞋库网",
+  "color": "#f39800",
+  "home": "https://www.cnxieku.com/",
+  "search": "https://www.cnxieku.com/search/?keyword={q}&searchType=1",
+  "login": "https://www.cnxieku.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "cnxieku",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "晋江鞋都B2B，覆盖晋江/泉州/温岭/莆田鞋",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/cnxieku.png",
+  "category": "wholesale",
+  "industry": "鞋包",
+  "needLogin": false
+ },
+ {
+  "id": "zhaojiafang",
+  "name": "找家纺",
+  "color": "#e60012",
+  "home": "https://www.zhaojiafang.com/",
+  "search": "https://search.zhaojiafang.com/?act=search&keyword={q}",
+  "login": "https://www.zhaojiafang.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "zhaojiafang",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "南通叠石桥家纺货源",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/zhaojiafang.png",
+  "category": "wholesale",
+  "industry": "纺织面料",
+  "needLogin": false
+ },
+ {
+  "id": "iyicaibao",
+  "name": "义采宝",
+  "color": "#ff6a00",
+  "home": "https://www.iyicaibao.com/",
+  "search": "https://www.iyicaibao.com/searchMarketResult/0_1_0_0_0_0_330000_330700?keyword={q}",
+  "login": "https://www.iyicaibao.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "iyicaibao",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "义乌商城集团官方采购平台",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/iyicaibao.png",
+  "category": "wholesale",
+  "industry": "小商品",
+  "needLogin": false
+ },
+ {
+  "id": "hznzcn",
+  "name": "货捕头杭州女装网",
+  "color": "#e83a2f",
+  "home": "https://www.hznzcn.com/",
+  "search": "https://www.hznzcn.com/product/soukuan.html?keyword={q}",
+  "login": "https://www.hznzcn.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "hznzcn",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "杭州四季青女装货源，搜索需登录",
+  "enabled": true,
+  "builtin": true,
+  "verified": true,
+  "accessMode": "desktop",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/hznzcn.png",
+  "category": "wholesale",
+  "industry": "服装",
+  "needLogin": true
+ },
+ {
+  "id": "boqii",
+  "name": "波奇宠物",
+  "color": "#ff6a00",
+  "home": "https://shop.boqii.com/",
+  "search": "https://shop.boqii.com/search?keyword={q}",
+  "login": "https://shop.boqii.com/",
+  "loginCookie": {
+   "domain": "",
+   "names": []
+  },
+  "partition": "boqii",
+  "capabilities": {
+   "text": true,
+   "image": false,
+   "ai": false
+  },
+  "imageSearch": null,
+  "aiSearch": null,
+  "note": "宠物用品商城",
+  "enabled": true,
+  "builtin": true,
+  "verified": false,
+  "accessMode": "follow",
+  "mobileHome": null,
+  "mobileSearch": null,
+  "mobileLogin": null,
+  "logo": "assets/platforms/boqii.png",
+  "category": "vertical",
+  "needLogin": false
+ }
+]

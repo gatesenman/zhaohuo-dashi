@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><title>找货大师</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: file:; img-src * data: file: blob:; font-src 'self' data: file:">
+<link rel="stylesheet" href="vendor/remixicon.css"><link rel="stylesheet" href="styles.css"></head>
+<body class="light">
+<header id="titlebar">
+  <div class="tb-brand"><img src="../build/icon.png" alt=""><span>找货大师</span><em id="verTag">v3.0</em></div>
+  <div class="tb-drag"></div>
+  <div class="tb-actions">
+    <button class="tb-btn" id="btnTheme" data-tip="切换深浅色 Ctrl+Shift+L"><i class="ri-moon-line"></i></button>
+    <button class="tb-btn" id="btnSettings" data-tip="设置 Ctrl+,"><i class="ri-settings-3-line"></i></button>
+    <span class="tb-sep"></span>
+    <button class="tb-win" data-win="min" aria-label="最小化"><i class="ri-subtract-line"></i></button>
+    <button class="tb-win" data-win="max" aria-label="最大化"><i class="ri-checkbox-blank-line" id="maxIcon"></i></button>
+    <button class="tb-win close" data-win="close" aria-label="关闭"><i class="ri-close-line"></i></button>
+  </div>
+</header>
+<div id="app">
+  <aside id="sidebar">
+    <div class="cat-seg seg" id="catSeg">
+      <button data-cat="all" class="active">全部</button><button data-cat="general">综合</button><button data-cat="content">内容直播</button><button data-cat="vertical">垂直品类</button><button data-cat="local">本地生活</button><button data-cat="secondhand">二手</button><button data-cat="crossborder">跨境</button><button data-cat="wholesale">批发货源</button>
+    </div>
+    <div class="sb-head"><span>搜索平台 <b id="selCount"></b></span>
+      <div class="sb-tools"><button class="icon-btn sm" id="selAll" data-tip="全选当前分类"><i class="ri-checkbox-multiple-line"></i></button><button class="icon-btn sm" id="selNone" data-tip="全部取消"><i class="ri-checkbox-blank-line"></i></button><button class="icon-btn sm" id="openManager" data-tip="管理平台"><i class="ri-equalizer-line"></i></button></div></div>
+    <div class="sb-scroll">
+      <ul id="platformList"></ul>
+    </div>
+    <div class="sb-foot">
+      <button class="sb-link" id="openBelts"><i class="ri-map-pin-2-line"></i>产业带找货<b id="beltName"></b></button>
+      <button class="sb-link" id="openFavs"><i class="ri-star-line"></i>我的收藏<b id="favCount"></b></button>
+      <button class="sb-link" id="openHistory"><i class="ri-history-line"></i>搜索历史</button>
+    </div>
+  </aside>
+  <main>
+    <div id="toolbar">
+      <div class="seg" id="modes">
+        <button data-mode="text" class="active" data-tip="文字搜索 Alt+1"><i class="ri-text"></i><span>文字</span></button>
+        <button data-mode="image" data-tip="以图搜货 Alt+2"><i class="ri-image-line"></i><span>图片</span></button>
+      </div>
+      <div class="searchwrap">
+        <div class="searchbox" id="searchbox">
+          <i class="ri-search-line lead"></i>
+          <div id="imgChip" hidden><img id="imgPreview" alt=""><span id="imgName"></span><i class="ri-close-circle-fill" id="imgClear"></i></div>
+          <input id="q" spellcheck="false" autocomplete="off" placeholder="输入商品名称，回车同时搜索所有已选平台">
+          <kbd>Ctrl K</kbd>
+          <button class="icon-btn" id="pickImg" data-tip="以图搜货：选择图片（也可粘贴或拖入）"><i class="ri-camera-line"></i></button>
+        </div>
+        <ul id="suggest" hidden></ul>
+      </div>
+      <button id="go" class="btn primary"><i class="ri-search-2-line"></i>一键找货</button>
+    </div>
+    <div id="progress" hidden></div>
+    <div id="resbar" hidden>
+      <div class="rb-left"><b id="resCount">0</b><span id="resMeta"></span><button id="bestDeal" class="best-deal" hidden></button></div>
+      <div class="rb-right">
+        <label class="chk-inline"><input type="checkbox" id="fGroup"><span>合并相似</span></label>
+        <div class="price-range"><input id="fMin" inputmode="decimal" placeholder="最低价"><span>–</span><input id="fMax" inputmode="decimal" placeholder="最高价"></div>
+        <select id="fPlat"><option value="">全部平台</option></select>
+        <select id="sort"><option value="default">综合排序</option><option value="price-asc">价格从低到高</option><option value="price-desc">价格从高到低</option><option value="sales">销量优先</option><option value="platform">按平台</option></select>
+        <div class="seg" id="views">
+          <button data-view="card" class="active" data-tip="卡片"><i class="ri-layout-grid-line"></i></button>
+          <button data-view="list" data-tip="列表"><i class="ri-list-check-2"></i></button>
+          <button data-view="table" data-tip="表格"><i class="ri-table-line"></i></button>
+        </div>
+        <div class="dropdown"><button class="btn" id="exportBtn"><i class="ri-download-2-line"></i>导出</button>
+          <div class="menu" id="exportMenu" hidden><button data-exp="csv"><i class="ri-file-text-line"></i>导出 CSV</button><button data-exp="xls"><i class="ri-file-excel-2-line"></i>导出 Excel</button></div></div>
+      </div>
+    </div>
+    <section id="results">
+      <div id="empty" class="state">
+        <div class="empty-ico"><i class="ri-shopping-bag-3-line"></i></div>
+        <h2>一次搜索，全网比价找货</h2>
+        <p>同时搜索零售平台和批发货源，结果按价格、销量统一排列</p>
+        <div class="chips" id="hotChips"></div>
+        <div class="shortcuts"><span><kbd>Ctrl K</kbd>搜索</span><span><kbd>Ctrl V</kbd>粘贴图片找同款</span><span><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd>切换视图</span><span><kbd>Ctrl E</kbd>导出</span></div>
+      </div>
+      <div id="list"></div>
+    </section>
+    <div id="comparebar" hidden><span id="cmpText"></span><button class="btn" id="cmpClear">清空</button><button class="btn primary" id="cmpOpen"><i class="ri-scales-3-line"></i>对比</button></div>
+    <footer id="status"><span><i class="ri-information-line"></i><span id="statusText">就绪</span></span><span id="loginSummary"></span></footer>
+  </main>
+</div>
+
+<!-- 设置 -->
+<div id="modal" class="overlay" hidden>
+  <div class="dialog settings">
+    <div class="dlg-side">
+      <h3>设置</h3>
+      <button data-sp="general" class="active"><i class="ri-settings-4-line"></i>常规</button>
+      <button data-sp="platforms"><i class="ri-apps-2-line"></i>平台管理</button>
+      <button data-sp="accounts"><i class="ri-user-3-line"></i>账号登录</button>
+      <button data-sp="keys"><i class="ri-keyboard-line"></i>快捷键</button>
+      <button data-sp="about"><i class="ri-information-line"></i>关于</button>
+    </div>
+    <div class="dlg-body">
+      <button class="icon-btn dlg-close" data-close aria-label="关闭"><i class="ri-close-line"></i></button>
+      <section data-page="general">
+        <h2>常规</h2>
+        <div class="field-row"><label>外观</label><div class="seg" id="themeSeg"><button data-theme="light"><i class="ri-sun-line"></i>浅色</button><button data-theme="dark"><i class="ri-moon-line"></i>深色</button><button data-theme="system"><i class="ri-computer-line"></i>跟随系统</button></div></div>
+        <div class="field-row"><label>默认访问方式<small class="hint">移动端页面通常更轻、更快；个别平台可在“平台管理”单独设置</small></label><div class="seg" id="accessSeg"><button data-am="mobile"><i class="ri-smartphone-line"></i>移动端</button><button data-am="desktop"><i class="ri-computer-line"></i>电脑端</button></div></div>
+        <div class="field-row"><label>商品详情打开方式</label><select id="setDetail"><option value="popup">应用内弹窗（保持登录）</option><option value="browser">系统浏览器</option></select></div>
+        <div class="field-row"><label>结果缓存<small class="hint">相同关键词在有效期内直接显示，秒出结果</small></label><select id="setCache"><option value="0">不缓存</option><option value="5">5 分钟</option><option value="30">30 分钟</option><option value="120">2 小时</option></select></div>
+        <div class="field-row"><label>单个平台最长等待<small class="hint">超过时间自动跳过，先看已出的结果</small></label><select id="setTimeout"><option value="20">20 秒（最快）</option><option value="30">30 秒</option><option value="45">45 秒（推荐）</option><option value="60">60 秒</option><option value="90">90 秒（网络慢时）</option></select></div>
+        <div class="field-row"><label>同时搜索的平台数<small class="hint">数值越大越快，但更占内存</small></label><select id="setConc"><option>3</option><option>4</option><option>6</option><option>8</option></select></div>
+        <div class="field-row"><label>每个平台最多取</label><select id="setLimit"><option value="20">20 件</option><option value="40">40 件</option><option value="60">60 件</option></select></div>
+        <div class="field-row"><label>搜索历史</label><button class="btn" id="setClearHistory"><i class="ri-delete-bin-6-line"></i>清空历史</button></div>
+      </section>
+      <section data-page="platforms" hidden>
+        <h2>平台管理 <small>拖动排序 · 开关控制是否显示</small></h2>
+        <div class="pm-actions">
+          <button class="btn primary" id="pmAdd"><i class="ri-add-line"></i>添加平台</button>
+          <button class="btn" id="pmImport"><i class="ri-upload-2-line"></i>导入</button>
+          <button class="btn" id="pmExport"><i class="ri-download-2-line"></i>导出</button>
+          <button class="btn ghost" id="pmReset"><i class="ri-refresh-line"></i>恢复默认</button>
+        </div>
+        <ul id="pmList"></ul>
+      </section>
+      <section data-page="accounts" hidden><h2>账号登录 <small>登录信息只保存在这台电脑上，重启后仍然有效</small></h2><ul id="accList"></ul></section>
+      <section data-page="keys" hidden><h2>快捷键</h2><table class="keys">
+        <tr><td>聚焦搜索框</td><td><kbd>Ctrl</kbd> <kbd>K</kbd> 或 <kbd>/</kbd></td></tr><tr><td>一键找货</td><td><kbd>Enter</kbd></td></tr>
+        <tr><td>选择历史建议</td><td><kbd>↑</kbd> <kbd>↓</kbd></td></tr><tr><td>粘贴图片找同款</td><td><kbd>Ctrl</kbd> <kbd>V</kbd></td></tr>
+        <tr><td>卡片 / 列表 / 表格</td><td><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></td></tr><tr><td>导出结果</td><td><kbd>Ctrl</kbd> <kbd>E</kbd></td></tr>
+        <tr><td>重新搜索（忽略缓存）</td><td><kbd>F5</kbd></td></tr><tr><td>切换深浅色</td><td><kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>L</kbd></td></tr>
+        <tr><td>设置</td><td><kbd>Ctrl</kbd> <kbd>,</kbd></td></tr><tr><td>关闭弹窗</td><td><kbd>Esc</kbd></td></tr></table></section>
+      <section data-page="about" hidden><div class="about"><img src="../build/icon.png" alt=""><h2 id="aboutVer">找货大师</h2><p>跨平台一键找货 · 零售与批发货源统一比价</p><p class="muted">所有数据只保存在本机</p></div></section>
+    </div>
+  </div>
+</div>
+
+<!-- 平台编辑 -->
+<div id="editor" class="overlay" hidden>
+  <form class="dialog form" id="pform">
+    <h2 id="pformTitle">添加平台</h2>
+    <div class="grid2">
+      <div class="span2 logo-row"><span class="logo-prev" id="logoPreview"></span><div><b>平台图标</b><small>保存时自动从官网获取，也可以上传自己的图片</small></div>
+        <button type="button" class="btn" id="logoFetch"><i class="ri-download-cloud-2-line"></i>自动获取</button><button type="button" class="btn" id="logoUpload"><i class="ri-upload-2-line"></i>上传</button><button type="button" class="btn ghost" id="logoClear">清除</button></div>
+      <label>名称<input name="name" required placeholder="例如：某某批发网"></label>
+      <label>ID<input name="id" required pattern="[a-z0-9_\-]+" placeholder="小写字母或数字，如 mall1"></label>
+      <label>分类<select name="category"><option value="general">综合</option><option value="content">内容直播</option><option value="vertical">垂直品类</option><option value="local">本地生活</option><option value="secondhand">二手</option><option value="crossborder">跨境</option><option value="wholesale">批发货源</option></select></label>
+      <label>访问方式<select name="accessMode"><option value="follow">跟随全局</option><option value="mobile">移动端</option><option value="desktop">电脑端</option></select></label>
+      <label class="span2">首页 URL<input name="home" type="url" required placeholder="https://"></label>
+      <label class="span2">搜索 URL 模板<small>{q} 为关键词（UTF-8），{q:gbk} 为 GBK 编码</small><input name="search" placeholder="https://example.com/search?q={q}"></label>
+      <label>移动端首页 URL<input name="mobileHome" placeholder="留空则用电脑端"></label>
+      <label>移动端登录 URL<input name="mobileLogin" placeholder="留空则用电脑端"></label>
+      <label class="span2">移动端搜索 URL 模板<input name="mobileSearch" placeholder="https://m.example.com/search?q={q}"></label>
+      <label class="span2">登录页 URL<input name="login" placeholder="https://"></label>
+      <label>登录判定 Cookie 域名<input name="cookieDomain" placeholder="example.com"></label>
+      <label>登录判定 Cookie 名<input name="cookieNames" placeholder="token,uid（逗号分隔）"></label>
+      <label>会话分区<input name="partition" placeholder="默认同 ID，同分区共享登录"></label>
+      <label>品牌色<input name="color" type="color" value="#ff5c28"></label>
+      <fieldset class="span2"><legend>商品提取规则（可选，留空使用智能识别）</legend>
+        <div class="grid2">
+          <label class="span2">商品卡片选择器<input name="exItem" placeholder="如 .item-card"></label>
+          <label>标题<input name="exTitle" placeholder=".title"></label><label>价格<input name="exPrice" placeholder=".price"></label>
+          <label>图片<input name="exImage" placeholder="img.main"></label><label>链接<input name="exLink" placeholder="a.detail"></label>
+          <label>店铺<input name="exShop" placeholder=".shop-name"></label><label>销量<input name="exSales" placeholder=".deal-cnt"></label>
+        </div></fieldset>
+      <label>图片搜索<select name="image"><option value="false">不支持</option><option value="true">支持（自动上传）</option></select></label>
+      <label>图搜页面 URL<input name="imageUrl" placeholder="默认首页"></label>
+      <label class="span2">备注<input name="note"></label>
+    </div>
+    <div class="form-actions"><span class="err" id="pformErr"></span><button type="button" class="btn" id="pformTest"><i class="ri-flask-line"></i>试搜一下</button><button type="button" class="btn ghost" data-close>取消</button><button type="submit" class="btn primary">保存</button></div>
+  </form>
+</div>
+
+<!-- 原网页（登录/验证等高级场景） -->
+<div id="raw" class="overlay" hidden>
+  <div class="dialog rawdlg">
+    <div class="raw-head"><span id="rawLogo"></span><div><b id="rawTitle"></b><small id="rawSub"></small></div>
+      <button class="btn" id="rawExternal"><i class="ri-external-link-line"></i>系统浏览器打开</button>
+      <button class="btn primary" id="rawDone"><i class="ri-refresh-line"></i>完成，重新获取</button>
+      <button class="icon-btn" data-close aria-label="关闭"><i class="ri-close-line"></i></button></div>
+    <div class="raw-body" id="rawBody"></div>
+  </div>
+</div>
+
+<!-- 收藏 / 历史 / 对比 抽屉 -->
+<div id="drawer" class="overlay" hidden><div class="drawer"><div class="drawer-head"><b id="drawerTitle"></b><button class="icon-btn" data-close><i class="ri-close-line"></i></button></div><div id="drawerBody"></div></div></div>
+<div id="cmpDlg" class="overlay" hidden><div class="dialog cmp"><div class="drawer-head"><b>商品对比</b><button class="icon-btn" data-close><i class="ri-close-line"></i></button></div><div id="cmpBody"></div></div></div>
+
+<div id="toasts"></div>
+<div id="drop" hidden><i class="ri-image-add-line"></i><span>松开图片，全网找同款</span></div>
+<div id="tooltip" hidden></div>
+<script src="renderer.js"></script></body></html>
