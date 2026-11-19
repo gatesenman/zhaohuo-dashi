@@ -15,14 +15,12 @@
 
 ## 从源码运行
 
-源码在 `src/`（`package.json` 与 `src/src`）。本仓库不包含安装包。
+源码在仓库根目录（`package.json` 与 `src/`）。本仓库不包含安装包。
 
 ```bash
-cd src
 npm install
 npm start
 ```
-
 产业带相关笔记见仓库根目录 `产业带研究.md`。
 
 ## 文档
@@ -50,14 +48,12 @@ npm start
 
 ## Getting started
 
-Source is under `src/` (`package.json` and `src/src`). This repository does not include installers.
+Source is at the repository root (`package.json` and `src/`). This repository does not include installers.
 
 ```bash
-cd src
 npm install
 npm start
 ```
-
 Industry-cluster notes are in `产业带研究.md` at the repository root.
 
 ## Documentation
