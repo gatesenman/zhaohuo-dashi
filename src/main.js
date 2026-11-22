@@ -38,6 +38,13 @@ function loadPlatforms() {
     if (d && p.imageSearch && d.imageSearch && p.imageSearch.mobileUrl === undefined) p.imageSearch.mobileUrl = d.imageSearch.mobileUrl;
     if (d && p.builtin && (p.category === 'retail' || !p.category)) p.category = d.category;
     if (d && p.builtin) { p.needLogin = d.needLogin; p.industry = d.industry; if (p.id === 'jddj' || p.id === 'meituan') p.name = d.name; }
+    // 3.8：补齐内置平台新搜索地址、CSS 提取器；当当因移动证书问题改默认桌面
+    if (d && p.builtin) {
+      if (p.id === 'dangdang' && d.accessMode) p.accessMode = d.accessMode;
+      if (!p.search && d.search) { p.search = d.search; if (d.capabilities) p.capabilities = d.capabilities; if (d.note != null && d.note !== '') p.note = d.note; }
+      if (!p.mobileSearch && d.mobileSearch) p.mobileSearch = d.mobileSearch;
+      if (!p.extractor && d.extractor) p.extractor = d.extractor;
+    }
     delete p.ua;
   }
   // v3.4：移除新版本已下线的内置平台（如 chinagoods）

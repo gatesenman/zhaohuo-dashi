@@ -28,6 +28,10 @@ See the README for how to build and run from source.
 
 从源码构建与运行的步骤见仓库 README。
 
+Extraction unit tests (no Electron): `node tools/extract-unit-test.js`
+
+提取逻辑单测（不启动 Electron）：`node tools/extract-unit-test.js`
+
 ## Security / 安全
 
 Do not report vulnerabilities in public issues. Follow [SECURITY.md](SECURITY.md).

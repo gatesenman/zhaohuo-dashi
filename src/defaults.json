@@ -43,7 +43,16 @@
   "mobileSearch": "https://main.m.taobao.com/search/index.html?q={q}",
   "mobileLogin": "https://login.m.taobao.com/login.htm",
   "logo": "assets/platforms/taobao.png",
-  "category": "general"
+  "category": "general",
+  "extractor": {
+   "item": "[class*='Card--'], [class*='itemCard'], .items .item",
+   "title": "[class*='Title--'], [class*='title'], .title a",
+   "price": "[class*='Price--'], [class*='price'], .price, .g_price",
+   "image": "img",
+   "link": "a[href*='item.taobao.com'], a[href*='detail.tmall.com']",
+   "shop": "[class*='Shop--'], [class*='shop']",
+   "sales": "[class*='Sale--'], [class*='sale'], [class*='realSales'], .deal-cnt"
+  }
  },
  {
   "id": "tmall",
@@ -85,7 +94,16 @@
   "mobileSearch": "https://main.m.taobao.com/search/index.html?q={q}&tab=mall",
   "mobileLogin": "https://login.m.taobao.com/login.htm",
   "logo": "assets/platforms/tmall.png",
-  "category": "general"
+  "category": "general",
+  "extractor": {
+   "item": "[class*='Card--'], [class*='itemCard'], .items .item",
+   "title": "[class*='Title--'], [class*='title'], .title a",
+   "price": "[class*='Price--'], [class*='price'], .price, .g_price",
+   "image": "img",
+   "link": "a[href*='item.taobao.com'], a[href*='detail.tmall.com']",
+   "shop": "[class*='Shop--'], [class*='shop']",
+   "sales": "[class*='Sale--'], [class*='sale'], [class*='realSales'], .deal-cnt"
+  }
  },
  {
   "id": "tmallcs",
@@ -118,7 +136,16 @@
   "mobileSearch": "https://main.m.taobao.com/search/index.html?q={q}%20%E5%A4%A9%E7%8C%AB%E8%B6%85%E5%B8%82",
   "mobileLogin": "https://login.m.taobao.com/login.htm",
   "logo": "assets/platforms/tmallcs.png",
-  "category": "vertical"
+  "category": "vertical",
+  "extractor": {
+   "item": "[class*='Card--'], [class*='itemCard'], .items .item",
+   "title": "[class*='Title--'], [class*='title'], .title a",
+   "price": "[class*='Price--'], [class*='price'], .price, .g_price",
+   "image": "img",
+   "link": "a[href*='item.taobao.com'], a[href*='detail.tmall.com']",
+   "shop": "[class*='Shop--'], [class*='shop']",
+   "sales": "[class*='Sale--'], [class*='sale'], [class*='realSales'], .deal-cnt"
+  }
  },
  {
   "id": "jd",
@@ -166,7 +193,16 @@
   "mobileSearch": "https://so.m.jd.com/ware/search.action?keyword={q}",
   "mobileLogin": "https://plogin.m.jd.com/login/login",
   "logo": "assets/platforms/jd.png",
-  "category": "general"
+  "category": "general",
+  "extractor": {
+   "item": "#J_goodsList .gl-item, .gl-warp .gl-item, li.gl-item",
+   "title": ".p-name a em, .p-name a, .p-name",
+   "price": ".p-price strong i, .p-price .J_price, .p-price",
+   "image": ".p-img img, img",
+   "link": ".p-name a, .p-img a",
+   "shop": ".p-shop a, .p-shopnum a",
+   "sales": ".p-commit a"
+  }
  },
  {
   "id": "jddj",
@@ -517,7 +553,15 @@
   "mobileSearch": "https://m.suning.com/search/{q}/",
   "mobileLogin": null,
   "logo": "assets/platforms/suning.png",
-  "category": "general"
+  "category": "general",
+  "extractor": {
+   "item": "li.product .pro-item, .pro-item, li.product",
+   "title": ".pro-title",
+   "price": ".price-num, .price-txt, .price",
+   "image": ".pro-img img, img",
+   "shop": ".shop-name",
+   "sales": ".show-evaluate"
+  }
  },
  {
   "id": "dangdang",
@@ -541,16 +585,24 @@
   },
   "imageSearch": null,
   "aiSearch": null,
-  "note": "",
+  "note": "默认电脑端：search.m.dangdang.com 的证书是 *.dangdang.com，无法覆盖三级域名，移动搜索会 SSL 失败；桌面 search.dangdang.com 可用",
   "enabled": true,
   "builtin": true,
   "verified": true,
-  "accessMode": "follow",
+  "accessMode": "desktop",
   "mobileHome": "https://m.dangdang.com/",
   "mobileSearch": "https://search.m.dangdang.com/search.php?keyword={q}",
   "mobileLogin": "https://login.m.dangdang.com/",
   "logo": "assets/platforms/dangdang.png",
-  "category": "vertical"
+  "category": "vertical",
+  "extractor": {
+   "item": "#search_nature_rg ul.bigimg > li[ddt-pit], ul.bigimg > li[id^='p']",
+   "title": "p.name a, a.pic",
+   "price": ".search_now_price, p.price",
+   "image": "a.pic img, img",
+   "link": "p.name a, a.pic",
+   "sales": ".search_comment_num"
+  }
  },
  {
   "id": "dewu",
@@ -621,7 +673,7 @@
   "name": "微店",
   "color": "#e5391d",
   "home": "https://weidian.com/",
-  "search": null,
+  "search": "https://h5.weidian.com/m/search/searchlist/index.html?keyword={q}",
   "login": "https://sso.weidian.com/login/index.php",
   "loginCookie": {
    "domain": "weidian.com",
@@ -632,22 +684,29 @@
   },
   "partition": "weidian",
   "capabilities": {
-   "text": "manual",
+   "text": true,
    "image": false,
    "ai": false
   },
   "imageSearch": null,
   "aiSearch": null,
-  "note": "微店无全站网页搜索（/search 返回404），打开首页后粘贴关键词",
+  "note": "全站搜索走微店 H5 搜索结果页（h5.weidian.com/m/search/searchlist，参数 keyword）",
   "enabled": true,
   "builtin": true,
   "verified": true,
   "accessMode": "follow",
   "mobileHome": "https://m.weidian.com/",
-  "mobileSearch": null,
+  "mobileSearch": "https://h5.weidian.com/m/search/searchlist/index.html?keyword={q}",
   "mobileLogin": null,
   "logo": "assets/platforms/weidian.png",
-  "category": "content"
+  "category": "content",
+  "extractor": {
+   "item": "li.item, li.spu_li, .item-container .item",
+   "title": ".spu_title, .title, .name",
+   "price": ".new-price, .item_price, .spu_price, .price-container .price",
+   "image": "img.pic, .spu_img, img",
+   "link": "a.item-a, a[href*='item.html']"
+  }
  },
  {
   "id": "gome",
@@ -807,7 +866,15 @@
   "mobileLogin": null,
   "category": "wholesale",
   "logo": "assets/platforms/zwd17.png",
-  "industry": "服装"
+  "industry": "服装",
+  "extractor": {
+   "item": "[class*='goodsCard'], [class*='goods-card']",
+   "title": "[class*='goodsTitle'], [class*='goods-title']",
+   "price": "[class*='goodsPrice'], [class*='goods-price']",
+   "image": "[class*='goodsImage'] img, [class*='goodsImage'], img",
+   "link": "a[href*='/item/']",
+   "shop": "[class*='shopName']"
+  }
  },
  {
   "id": "vvic",
@@ -1303,7 +1370,16 @@
   "mobileLogin": null,
   "logo": "assets/platforms/jingxi.png",
   "category": "general",
-  "needLogin": true
+  "needLogin": true,
+  "extractor": {
+   "item": "#J_goodsList .gl-item, .gl-warp .gl-item, li.gl-item",
+   "title": ".p-name a em, .p-name a, .p-name",
+   "price": ".p-price strong i, .p-price .J_price, .p-price",
+   "image": ".p-img img, img",
+   "link": ".p-name a, .p-img a",
+   "shop": ".p-shop a, .p-shopnum a",
+   "sales": ".p-commit a"
+  }
  },
  {
   "id": "mogujie",
@@ -1396,7 +1472,16 @@
   "mobileLogin": null,
   "logo": "assets/platforms/jdhealth.png",
   "category": "vertical",
-  "needLogin": true
+  "needLogin": true,
+  "extractor": {
+   "item": "#J_goodsList .gl-item, .gl-warp .gl-item, li.gl-item",
+   "title": ".p-name a em, .p-name a, .p-name",
+   "price": ".p-price strong i, .p-price .J_price, .p-price",
+   "image": ".p-img img, img",
+   "link": ".p-name a, .p-img a",
+   "shop": ".p-shop a, .p-shopnum a",
+   "sales": ".p-commit a"
+  }
  },
  {
   "id": "alihealth",
@@ -1644,7 +1729,16 @@
   "mobileLogin": null,
   "logo": "assets/platforms/paipai.png",
   "category": "secondhand",
-  "needLogin": true
+  "needLogin": true,
+  "extractor": {
+   "item": "#J_goodsList .gl-item, .gl-warp .gl-item, li.gl-item",
+   "title": ".p-name a em, .p-name a, .p-name",
+   "price": ".p-price strong i, .p-price .J_price, .p-price",
+   "image": ".p-img img, img",
+   "link": ".p-name a, .p-img a",
+   "shop": ".p-shop a, .p-shopnum a",
+   "sales": ".p-commit a"
+  }
  },
  {
   "id": "aihuishou",

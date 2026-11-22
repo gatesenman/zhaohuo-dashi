@@ -1,99 +1,96 @@
 // 找货大师 · 商品提取引擎：隐藏窗口加载平台搜索页 → 提取商品 → 返回结构化结果
 const { BrowserWindow, session } = require('electron');
+const lib = require('./extract-lib');
+const { EXTRACT_FN, walkJson, tryParseJson, collectPriceMap, finalizeItems } = lib;
 
-// 通用启发式提取脚本（在页面内执行）。cfg 为平台可选的 CSS 选择器配置。
-const EXTRACT_FN = function (cfg, limit) {
-  const abs = u => { try { return u ? new URL(u, location.href).href : ''; } catch { return ''; } };
-  const txt = el => (el ? (el.innerText || el.textContent || '') : '').replace(/\s+/g, ' ').trim();
-  const imgSrc = img => {
-    if (!img) return '';
-    const c = [img.currentSrc, img.getAttribute('data-src'), img.getAttribute('data-ks-lazyload'), img.getAttribute('data-original'), img.getAttribute('data-lazy-img'), img.getAttribute('data-lazyload'), img.getAttribute('src'),
-      (img.getAttribute('srcset') || img.getAttribute('data-srcset') || '').split(/\s|,/)[0]].find(s => s && !/^data:image\/(gif|svg)/.test(s) && !/blank|placeholder|loading|grey\.gif|1x1/.test(s));
-    return abs(c);
-  };
-  const bgImg = el => { const m = /url\(["']?([^"')]+)/.exec(getComputedStyle(el).backgroundImage || ''); return m ? abs(m[1]) : ''; };
-  const PRICE = /[¥￥]\s*(\d{1,7}(?:\.\d{1,2})?)/;
-  const PRICE2 = /(\d{1,7}(?:\.\d{1,2})?)\s*元/;
-  const SALES = /((?:\d+(?:\.\d+)?\s*[万wW]\+?|(?<![\d.])\d+\+?))\s*(?:人付款|人收货|人已买|人买过|件已售|已售|销量|人评价|条评价|成交|笔成交|人想要|评价)|(?:已售|销量|月销|成交|已拼|总销量)\s*[:：]?\s*((?:\d+(?:\.\d+)?\s*[万wW]\+?|\d+\+?))(?![\d.])/;
-  const parsePrice = s => { s = (s || '').replace(/\s+/g, ''); let m = PRICE.exec(s) || PRICE2.exec(s); if (m) return parseFloat(m[1]); m = /US\s?\$\s*(\d{1,6}(?:\.\d{1,2})?)/.exec(s); return m ? Math.round(parseFloat(m[1]) * 710) / 100 : null; };
-  const parseSales = s => { const m = SALES.exec(s || ''); if (!m) return null; const v = (m[1] || m[2]).replace(/\s|\+/g, ''); const n = parseFloat(v) * (/[万wW]/.test(v) ? 10000 : 1); return isNaN(n) ? null : { n, text: m[0].trim() }; };
-  const visibleImg = img => { const r = img.getBoundingClientRect(); return r.width >= 50 && r.height >= 50; };
-  const out = [];
-  const seen = new Set();
-  const push = it => {
-    if (!it.title || it.title.length < 4 || (it.price == null && !it.priceText) || !it.link) return;
-    // 3.6：过滤二维码/APP 推广等垃圾卡片（世界工厂网、中国制造网常见）
-    if (/二维码|扫码|扫一扫|微信扫|手机版|下载\s*APP|APP\s*下载|关注公众号|官方微信|小程序|在线客服|免费注册|立即登录/i.test(it.title)) return;
-    if (/qr[_-]?code|erweima|ewm|\/qr[\/_.]|wxcode|weixin|wechat|app[_-]?down/i.test(it.image || '')) return;
-    if (it.image && /^https?:\/\/[^/]+\/?$/.test(it.image)) return;
-    if (it.price != null && (it.price <= 0 || it.price > 5e7)) return;
-    const k = it.link.split('#')[0] + '|' + it.title.slice(0, 20); if (seen.has(k)) return; seen.add(k); out.push(it);
-  };
-  const fromCard = (card, sel = {}) => {
-    const q = s => (s ? card.querySelector(s) : null);
-    const imgs = [...card.querySelectorAll('img')].filter(visibleImg);
-    const img = q(sel.image) || imgs.sort((a, b) => b.getBoundingClientRect().width - a.getBoundingClientRect().width)[0];
-    const as = card.tagName === 'A' ? [card, ...card.querySelectorAll('a[href]')] : [...card.querySelectorAll('a[href]')];
-    const dl = [card, ...card.querySelectorAll('[data-href],[data-url],[data-link]')].map(e => e.getAttribute && (e.getAttribute('data-href') || e.getAttribute('data-url') || e.getAttribute('data-link'))).find(Boolean);
-    // 3.7：按“像商品详情页”打分选链接，避免选中店铺/展厅/列表链接（如中国制造网 showroom）
-    const lsc = a => { const h = a.getAttribute('href') || ''; if (!h || /^(javascript|#)/i.test(h)) return -9; let s = 0;
-      if (/item|detail|offer|\/prod|goods|\/p\/|sku|\/dp\/|gongying|supply\/|\/show\/|product\/|id=/i.test(h)) s += 5;
-      if (/\d{6,}/.test(h)) s += 1;
-      if (/showroom|shop|store|company|corp|list|search|category|\/s\?|login|cart|im\.|chat|tel:|mailto:/i.test(h)) s -= 4;
-      if (img && a.contains(img)) s += 1; if (a.textContent && a.textContent.trim().length >= 6) s += 1; return s; };
-    const link = q(sel.link) || [...as].sort((a, b) => lsc(b) - lsc(a)).find(a => lsc(a) > -9);
-    const full = txt(card);
-    let title = sel.title ? txt(q(sel.title)) : '';
-    if (!title) {
-      const cands = [img && img.alt, ...as.map(a => a.title), ...[...card.querySelectorAll('[title]')].map(e => e.title)].filter(Boolean);
-      const lines = (card.innerText || '').split('\n').map(s => s.trim()).filter(s => s.length >= 6 && s.length <= 140 && !PRICE.test(s) && !/^[\d.¥￥\s+万]+$/.test(s) && !SALES.test(s));
-      const bad = s => /^[\u4e00-\u9fa5]{2,6}[:：]/.test(s) || /(有限公司|有限责任公司|商行|经营部)$/.test(s) || /^(进店|找相似|加入购物车|立即购买)/.test(s);
-      const good = arr => arr.filter(s => s && s.length >= 6 && s.length <= 140 && !bad(s));
-      const named = good([...card.querySelectorAll('[class*=title] , [class*=name], [class*=Title], h3, h4')].filter(e => !/shop|store|company|co-name/i.test(e.className)).map(e => e.getAttribute('title') || txt(e)));
-      title = named.sort((a, b) => b.length - a.length)[0] || good(cands).sort((a, b) => b.length - a.length)[0] || good(lines).sort((a, b) => b.length - a.length)[0] || '';
-    }
-    const price = parsePrice(sel.price ? txt(q(sel.price)) : full) ?? parsePrice(full);
-    const priceText = price == null && /面议|询价|电议/.test(full) ? '面议' : '';
-    const sales = parseSales(sel.sales ? txt(q(sel.sales)) : full);
-    let shop = sel.shop ? txt(q(sel.shop)) : '';
-    if (!shop) { const se = card.querySelector('[class*=shop],[class*=Shop],[class*=store],[class*=Store],[class*=seller],[class*=company],[class*=Company]'); shop = se ? txt(se).split(/\s{2,}|\n/)[0] : ''; }
-    if (!shop) { const m = /([\u4e00-\u9fa5A-Za-z0-9·]{2,20}(?:旗舰店|专卖店|专营店|官方店|商行|公司|厂|店|批发部|档口))/.exec(full); shop = m ? m[1] : ''; }
-    const wi = String((window.__wwI = (window.__wwI || 0) + 1)); card.setAttribute('data-ww-i', wi);
-    return { wi, title: title.slice(0, 140), price, sales: sales ? sales.text : '', salesNum: sales ? sales.n : 0, shop: shop.slice(0, 40), image: img ? imgSrc(img) : bgImg(card), priceText, link: abs(link ? link.getAttribute('href') : (dl || (card.closest('a[href]') || {}).href || location.href)), noLink: !link && !dl };
-  };
-  // 1) 平台专用选择器
-  if (cfg && cfg.item) { for (const card of document.querySelectorAll(cfg.item)) { push(fromCard(card, cfg)); if (out.length >= limit) break; } }
-  // 2) 通用启发式：价格叶子节点 → 向上找到同时包含图片和链接的最小“卡片”
-  if (out.length < 3) {
-    const cards = new Set();
-    const leaves = [...document.querySelectorAll('body *')].filter(el => {
-      if (el.children.length > 3) return false;
-      const t = (el.textContent || '').trim(); if (!t || t.length > 30) return false;
-      return /[¥￥]/.test(t) || /price|Price|jiage/.test(el.className || '') && /\d|面议/.test(t);
-    }).slice(0, 1500);
-    for (const leaf of leaves) {
-      let el = leaf;
-      for (let i = 0; i < 9 && el && el !== document.body; i++, el = el.parentElement) {
-        const r = el.getBoundingClientRect();
-        if (r.width > innerWidth * 0.98 && r.height > 900) break;
-        if ([...el.querySelectorAll('img')].some(visibleImg) && (el.tagName === 'A' || el.querySelector('a[href]') || el.closest('a[href]') || /^(LI)$/.test(el.tagName) || /item|card|goods|product/i.test(el.className || ''))) {
-          if ((el.innerText || '').length < 800) cards.add(el);
-          break;
-        }
-      }
-    }
-    // 去掉包含其他卡片的外层容器（保留最小卡片）
-    const arr = [...cards].filter(c => ![...cards].some(o => o !== c && c.contains(o)));
-    for (const c of arr) { push(fromCard(c)); if (out.length >= limit) break; }
-  }
-  const text = (document.body ? document.body.innerText : '').slice(0, 3000);
-  return { items: out.slice(0, limit), url: location.href, title: document.title, text, h: document.documentElement.scrollHeight };
-};
-
-const LOGIN_RE = /(passport|login|signin|mlogin|plogin|mini_login|sso)[./?]/i;
-const BLOCK_RE = /验证码|安全验证|滑块|拖动滑块|人机验证|身份核实|访问受限|访问被拒绝|请求过于频繁|captcha|verify|punish|risk_handler|Forbidden|Access Denied|Attention Required/i;
+const LOGIN_RE = /(passport|login|signin|mlogin|plogin|mini_login|sso)[./?]|\/login\.html?|login\.taobao|login\.tmall|login\.jd/i;
+const BLOCK_RE = /验证码|安全验证|滑块|拖动滑块|人机验证|身份核实|访问受限|访问被拒绝|请求过于频繁|请完成验证|captcha|verify|punish|risk_handler|Forbidden|Access Denied|Attention Required/i;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const within = (p, ms, v) => Promise.race([p, sleep(ms).then(() => v)]);
+
+// 把页面提取脚本与 JSON 遍历一起注入（EXTRACT_FN 依赖同文件导出的纯函数）
+function injectExtract(cfg, limit) {
+  return `(() => {
+    const parsePrice = ${lib.parsePrice.toString()};
+    const parseSales = ${lib.parseSales.toString()};
+    const isJunkTitle = ${lib.isJunkTitle.toString()};
+    const isJunkImage = ${lib.isJunkImage.toString()};
+    const firstStr = ${lib.firstStr.toString()};
+    const productUrlFrom = ${lib.productUrlFrom.toString()};
+    const pickId = ${lib.pickId.toString()};
+    const pickTitle = ${lib.pickTitle.toString()};
+    const pickImage = ${lib.pickImage.toString()};
+    const pickPrice = ${lib.pickPrice.toString()};
+    const pickPriceText = ${lib.pickPriceText.toString()};
+    const pickShop = ${lib.pickShop.toString()};
+    const pickSales = ${lib.pickSales.toString()};
+    const walkJson = ${lib.walkJson.toString()};
+    const collectPriceMap = ${lib.collectPriceMap.toString()};
+    const finalizeItems = ${lib.finalizeItems.toString()};
+    const tryParseJson = ${lib.tryParseJson.toString()};
+    return (${EXTRACT_FN.toString()})(${JSON.stringify(cfg || null)}, ${limit || 60});
+  })()`;
+}
+
+function looksLikeApi(url, mime) {
+  if (/\.(png|jpe?g|gif|webp|svg|ico|css|woff2?|ttf|mp4|mp3|m4s)(\?|$)/i.test(url)) return false;
+  if (/json|javascript|text\/plain/i.test(mime || '')) return true;
+  return /search|mtop|ajax|\/api|goods|product|item|ware|offer|sku|list|sycm|h5api|h5stk|jumbo|render|query/i.test(url || '');
+}
+
+// 仅在隐藏提取窗口上挂调试器拦截 XHR/fetch JSON；用完立即卸掉，不影响用户可见窗口。
+function attachNetworkCapture(wc) {
+  const dbg = wc.debugger;
+  const roots = [];
+  const pending = new Map();
+  let attachedHere = false;
+  const onMsg = async (_e, method, params) => {
+    try {
+      if (method === 'Network.responseReceived' && params && params.response) {
+        const url = params.response.url || '';
+        const mime = (params.response.mimeType || '') + ' ' + ((params.response.headers && (params.response.headers['content-type'] || params.response.headers['Content-Type'])) || '');
+        if (looksLikeApi(url, mime) && /XHR|Fetch|Document|Other/i.test(params.type || 'XHR')) pending.set(params.requestId, { url, mime });
+      }
+      if (method === 'Network.loadingFinished' && params && pending.has(params.requestId)) {
+        const meta = pending.get(params.requestId); pending.delete(params.requestId);
+        try {
+          const body = await dbg.sendCommand('Network.getResponseBody', { requestId: params.requestId });
+          let text = body.body || '';
+          if (body.base64Encoded) text = Buffer.from(text, 'base64').toString('utf8');
+          const json = tryParseJson(text);
+          if (json) roots.push({ url: meta.url, data: json });
+        } catch {}
+      }
+    } catch {}
+  };
+  return {
+    async start() {
+      try {
+        if (!dbg.isAttached()) { dbg.attach('1.3'); attachedHere = true; }
+        dbg.on('message', onMsg);
+        await dbg.sendCommand('Network.enable', { maxResourceBufferSize: 5 * 1024 * 1024, maxTotalBufferSize: 20 * 1024 * 1024 });
+      } catch (e) { /* 调试器不可用时退回 DOM/内嵌 JSON */ }
+    },
+    roots: () => roots,
+    async stop() {
+      try { dbg.removeListener('message', onMsg); } catch {}
+      if (attachedHere) try { dbg.detach(); } catch {}
+    }
+  };
+}
+
+function mergeItems(base, extra, limit) {
+  const out = (base || []).slice();
+  const seen = new Set(out.map(it => (it.link || '') + '|' + String(it.title || '').slice(0, 20) + '|' + (it.price ?? it.priceText ?? '')));
+  for (const it of extra || []) {
+    if (out.length >= (limit || 60)) break;
+    const k = (it.link || '') + '|' + String(it.title || '').slice(0, 20) + '|' + (it.price ?? it.priceText ?? '');
+    if (seen.has(k)) continue;
+    seen.add(k);
+    out.push(it);
+  }
+  return out;
+}
 
 class Extractor {
   constructor() { this.wins = new Map(); this.running = 0; this.queue = []; this.max = 6; }
@@ -131,7 +128,7 @@ class Extractor {
     await this.slot();
     const hard = (job.hardTimeout || 60000) + (job.upload ? 60000 : 0);
     const key = job.id + (job.mobile ? ':m' : ':d');
-    const r = await within(this._run(job, onStage, key), hard, null);
+    const r = await within(this._run(job, onStage, key, Date.now() + hard - 4000), hard, null);
     if (r) { this.release(); return r; }
     const w = this.wins.get(key); let tu = job.url, tt = '';
     if (w && !w.isDestroyed()) { try { tu = w.webContents.getURL() || tu; tt = await within(w.webContents.executeJavaScript('document.title + " :: " + (document.body ? document.body.innerText.replace(/\\s+/g, " ").slice(0, 150) : "")'), 2000, ''); if (process.env.WW_E2E) require('fs').writeFileSync(require('path').join(process.env.WW_E2E, 'snap-' + job.id + '.png'), (await within(w.webContents.capturePage(), 3000, null))?.toPNG() || Buffer.alloc(0)); } catch {} w.destroy(); }
@@ -139,51 +136,118 @@ class Extractor {
     this.release();
     return { status: 'timeout', msg: '平台响应太慢，已跳过 ' + (tt || ''), items: [], ms: hard, url: tu };
   }
-  async _run(job, onStage, key) {
+  async _run(job, onStage, key, deadline) {
     const w = this.win(key, job.partition, job.ua, job.mobile);
     const wc = w.webContents;
     const t0 = Date.now();
+    const remain = () => Math.max(0, deadline - Date.now());
+    const cap = attachNetworkCapture(wc);
     try {
       wc.setUserAgent(job.ua);
       onStage && onStage('loading');
       let failed = null;
       const onFail = (_e, code, desc, _u, main) => { if (main && code !== -3) failed = { code, desc }; };
       wc.on('did-fail-load', onFail);
-      await Promise.race([wc.loadURL(job.url).catch(() => {}), sleep(job.timeout || 25000)]);
+      await cap.start();
+      await Promise.race([wc.loadURL(job.url).catch(() => {}), sleep(Math.min(job.timeout || 25000, remain()))]);
       wc.removeListener('did-fail-load', onFail);
-      if (failed) return { status: 'error', code: failed.code, msg: failed.desc, url: wc.getURL(), ms: Date.now() - t0, items: [] };
-      if (job.typeQ) { onStage && onStage('typing'); await sleep(2500); await typeSearch(wc, job.typeQ); }
+      if (failed) { await cap.stop(); return { status: 'error', code: failed.code, msg: failed.desc, url: wc.getURL(), ms: Date.now() - t0, items: [] }; }
+      if (job.typeQ) { onStage && onStage('typing'); await sleep(Math.min(2500, remain())); await typeSearch(wc, job.typeQ); }
       if (job.upload) {
         onStage && onStage('uploading');
         const up = await within(job.upload(wc), 30000, { ok: false, msg: '上传图片超时' });
-        if (!up.ok) return { status: 'error', msg: up.msg, url: wc.getURL(), ms: Date.now() - t0, items: [] };
-        await sleep(6000);
+        if (!up.ok) { await cap.stop(); return { status: 'error', msg: up.msg, url: wc.getURL(), ms: Date.now() - t0, items: [] }; }
+        await sleep(Math.min(6000, remain()));
       }
       onStage && onStage('extracting');
-      let res = null;
-      // 滚动触发懒加载，多次尝试提取，直到稳定
-      for (let i = 0; i < (job.upload ? 2 : 4); i++) {
-        await sleep(i === 0 ? 1800 : 1200);
-        await within(wc.executeJavaScript(`window.scrollTo(0, ${(i + 1) * (job.mobile ? 1600 : 1400)});`).catch(() => {}), 3000);
-        await sleep(500);
-        await within(wc.executeJavaScript('window.scrollTo(0, 0)').catch(() => {}), 3000);
-        res = await Promise.race([wc.executeJavaScript(`(${EXTRACT_FN.toString()})(${JSON.stringify(job.extractor || null)}, ${job.limit || 60})`).catch(e => ({ items: [], err: e.message })), sleep(8000).then(() => ({ items: [], err: 'timeout' }))]);
-        if (res.items && res.items.length >= 10) break;
+      // 抖音/快手网页搜索默认综合或视频 Tab，点「商品」再抽（公开指南仍用 type=general + 点 Tab）
+      await this._clickGoodsTab(wc);
+      await this._waitForContent(wc, Math.min(16000, Math.max(0, remain() - 8000)), job.mobile);
+      let res = { items: [] };
+      const doExtract = async () => {
+        const page = await Promise.race([
+          wc.executeJavaScript(injectExtract(job.extractor || null, job.limit || 60)).catch(e => ({ items: [], err: e.message })),
+          sleep(8000).then(() => ({ items: [], err: 'timeout' }))
+        ]);
+        let items = (page && page.items) || [];
+        const host = (() => { try { return new URL(wc.getURL() || job.url || '').hostname; } catch { return ''; } })();
+        const netItems = [];
+        const priceMap = {};
+        for (const r of cap.roots()) {
+          try { netItems.push(...walkJson(r.data, host, job.limit || 60)); collectPriceMap(r.data, priceMap); } catch {}
+        }
+        items = finalizeItems(mergeItems(items, netItems, (job.limit || 60) * 2), priceMap, job.limit || 60);
+        return { ...(page || {}), items };
+      };
+      res = await doExtract();
+      // 不足 3 条时再滚一次、再抽一到两轮（不突破总时限）
+      for (let i = 0; i < 2 && (res.items || []).length < 3 && remain() > 5000; i++) {
+        await this._scrollBurst(wc, job.mobile);
+        await sleep(Math.min(2000, remain()));
+        const again = await doExtract();
+        if ((again.items || []).length > (res.items || []).length) res = again;
       }
+      await cap.stop();
       // 3.6：对“搜不到就显示默认列表”的站点（如一亩田）做相关性过滤：标题须包含关键词的任一双字片段
       if (job.relevant && job.q && res.items) { const qq = String(job.q).replace(/\s+/g, ''); const grams = qq.length < 2 ? [qq] : [...qq].slice(0, -1).map((c, i) => c + qq[i + 1]); res.items = res.items.filter(x => grams.some(g => (x.title || '').includes(g))); }
       const url = wc.getURL();
       let status = 'ok';
       if (!res.items || !res.items.length) {
-        if (LOGIN_RE.test(url)) status = 'login';
-        else if (BLOCK_RE.test(url + ' ' + (res.title || '') + ' ' + (res.text || '').slice(0, 400))) status = 'blocked';
+        const blob = url + ' ' + (res.title || '') + ' ' + (res.text || '').slice(0, 400);
+        if (LOGIN_RE.test(url) || /请(?:先)?登录|登录后|立即登录/.test(res.text || '')) status = 'login';
+        else if (BLOCK_RE.test(blob)) status = 'blocked';
         else status = 'empty';
       }
       let snap; if (status !== 'ok' && process.env.WW_E2E) { try { const f = require('path').join(process.env.WW_E2E, 'snap-' + job.id + '.png'); require('fs').writeFileSync(f, (await wc.capturePage()).toPNG()); snap = f; } catch {} }
       return { status, items: (res.items || []).map(x => ({ ...x, platform: job.id })), url, title: res.title, ms: Date.now() - t0, msg: status === 'ok' ? undefined : ('[' + (res.title || '').slice(0, 30) + '] ' + (res.text || '').replace(/\s+/g, ' ').slice(0, 160)), snap };
     } catch (e) {
+      try { await cap.stop(); } catch {}
       return { status: 'error', msg: e.message, items: [], ms: Date.now() - t0 };
     }
+  }
+  async _clickGoodsTab(wc) {
+    try {
+      const hit = await within(wc.executeJavaScript(`(() => {
+        const host = location.hostname || '';
+        if (!/douyin\\.com|kuaishou\\.com/.test(host)) return false;
+        const vis = e => { const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+        const t = [...document.querySelectorAll('a,div,span,button,li')].filter(vis).find(e => /^\\s*商品\\s*$/.test((e.innerText || e.textContent || '').trim()) && e.children.length < 4);
+        if (t) { t.click(); return true; }
+        return false;
+      })()`).catch(() => false), 3000, false);
+      if (hit) await sleep(2000);
+    } catch {}
+  }
+  async _scrollBurst(wc, mobile) {
+    const step = mobile ? 1600 : 1400;
+    await within(wc.executeJavaScript(`window.scrollTo(0, ${step});`).catch(() => {}), 3000);
+    await sleep(400);
+    await within(wc.executeJavaScript(`window.scrollTo(0, ${step * 2});`).catch(() => {}), 3000);
+    await sleep(400);
+    await within(wc.executeJavaScript('window.scrollTo(0, 0)').catch(() => {}), 3000);
+  }
+  // 等到价格/卡片/内嵌 JSON 出现，或达到上限。期间滚动以触发懒加载。
+  async _waitForContent(wc, budget, mobile) {
+    const t0 = Date.now();
+    let i = 0;
+    while (Date.now() - t0 < budget) {
+      const ready = await within(wc.executeJavaScript(`(() => {
+        const t = document.body ? document.body.innerText : '';
+        if (/[¥￥]|面议|询价|电议|&yen;|\\\\u00a5/.test(t)) return 'price';
+        if (window.__NEXT_DATA__ || window.__INITIAL_STATE__ || window.g_page_config || window.__INITIAL_DATA__ || window.rawData) return 'json';
+        if (document.querySelectorAll('[class*=pro-item],[class*=gl-item],[class*=goodsCard],[class*=Card--],#search_nature_rg li,img').length > 8) return 'dom';
+        return '';
+      })()`).catch(() => ''), 3000, '');
+      if (ready === 'price' || ready === 'json' || (ready === 'dom' && i >= 1)) {
+        // 再略滚一次让懒图加载
+        await this._scrollBurst(wc, mobile);
+        return ready;
+      }
+      await this._scrollBurst(wc, mobile);
+      await sleep(800);
+      i++;
+    }
+    await this._scrollBurst(wc, mobile);
   }
   // 预热：空闲时提前打开平台首页，建立连接、加载 Cookie，首次搜索更快
   async warm(jobs) {
@@ -196,12 +260,12 @@ class Extractor {
   closeAll() { for (const w of this.wins.values()) if (!w.isDestroyed()) w.destroy(); this.wins.clear(); }
 }
 
-// 3.7：没有搜索 URL 的网站——打开首页，找到搜索框输入关键词并回车（必要时先点“搜索”入口）
+// 3.7 / 3.8：没有搜索 URL 的网站——打开首页，找到搜索框输入关键词并回车（必要时先点“搜索”入口）
 const FIND_INPUT = `(() => { const vis = e => { const r = e.getBoundingClientRect(); return r.width > 20 && r.height > 8 && getComputedStyle(e).visibility !== 'hidden'; };
   const ins = [...document.querySelectorAll('input:not([type=hidden]):not([type=password]):not([type=checkbox]):not([type=radio]), textarea')].filter(vis);
-  const sc = e => (/search|keyword|kw|query|^q$|word|sousuo|so/i.test((e.name||'')+' '+(e.id||'')+' '+(e.className||'')) ? 2 : 0) + (/搜|search|找/i.test(e.placeholder||'') ? 3 : 0) + (e.type === 'search' ? 3 : 0);
+  const sc = e => (/search|keyword|kw|query|^q$|word|sousuo|so/i.test((e.name||'')+' '+(e.id||'')+' '+(e.className||'')) ? 2 : 0) + (/搜|search|找|想买|想要|找货|货源|输入商品|搜搜/i.test(e.placeholder||'') ? 3 : 0) + (e.type === 'search' ? 3 : 0) + (e.getAttribute('enterkeyhint') === 'search' ? 2 : 0);
   ins.sort((a, b) => sc(b) - sc(a)); const i = ins[0]; if (i && sc(i) > 0) { i.scrollIntoView({block:'center'}); i.focus(); i.click(); return 'input'; }
-  const t = [...document.querySelectorAll('a,div,span,button,i')].filter(vis).find(e => /search|sousuo/i.test(e.className + ' ' + (e.id||'')) || /^\s*(搜索|搜一搜|搜商品|搜你想要的.*)\s*$/.test(e.textContent || '') && e.children.length < 3);
+  const t = [...document.querySelectorAll('a,div,span,button,i')].filter(vis).find(e => /search|sousuo/i.test(e.className + ' ' + (e.id||'')) || /^\\s*(搜索|搜一搜|搜商品|搜你想要的.*|想买点什么.*)\\s*$/.test(e.textContent || '') && e.children.length < 3);
   if (t) { t.click(); return 'clicked'; } return 'none'; })()`;
 async function typeSearch(wc, q) {
   let r = await wc.executeJavaScript(FIND_INPUT).catch(() => 'none');
@@ -214,4 +278,4 @@ async function typeSearch(wc, q) {
   if (wc.getURL() === u0) await wc.executeJavaScript(`(() => { const b = [...document.querySelectorAll('button,a,span,div,i,input[type=submit]')].find(e => { const r = e.getBoundingClientRect(); return r.width > 0 && (/^\\s*(搜索|搜 索|搜)\\s*$/.test(e.textContent || e.value || '') && e.children.length < 2); }); if (b) b.click(); return !!b; })()`).catch(() => {});
   await sleep(4000); return true;
 }
-module.exports = { typeSearch, Extractor, EXTRACT_FN, LOGIN_RE };
+module.exports = { typeSearch, Extractor, EXTRACT_FN, LOGIN_RE, walkJson, injectExtract };

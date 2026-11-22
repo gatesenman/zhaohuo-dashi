@@ -1,7 +1,7 @@
 {
   "name": "zhaohuo-dashi",
   "productName": "找货大师",
-  "version": "3.7.0",
+  "version": "3.8.0",
   "description": "找货大师 - 跨电商平台一键找货",
   "main": "src/main.js",
   "author": "ZhaoHuoDaShi",

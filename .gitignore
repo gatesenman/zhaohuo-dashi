@@ -1,13 +1,15 @@
 # Dependencies
 node_modules/
 
-# Build outputs
+# Build outputs (electron-builder writes to dist/; icons live in build/)
 dist/
-build/
 out/
 target/
 *.tsbuildinfo
 *.jar
+*.exe
+*.blockmap
+*.AppImage
 
 # Environment and secrets (keep examples)
 .env
@@ -35,3 +37,9 @@ coverage/
 Thumbs.db
 *.swp
 .idea/
+
+# Local test artifacts / delivery leftovers (do not publish)
+e2e/
+e2e-v*/
+dbgtool/
+archive/
