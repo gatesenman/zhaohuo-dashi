@@ -2,6 +2,20 @@
 
 **3.8.0** · 跨电商平台一键找货桌面工具：在多个采购与零售平台上搜索同款或替代货源。
 
+## 下载
+
+当前 GitHub 上**没有**已发布安装包（无 Release）。`package.json` 版本为 **3.8.0**。Windows 打包可用 `npm run dist:win`，按配置预期产物为 `ZhaoHuoDaShi-3.8.0-win-x64.exe`（NSIS）与 `ZhaoHuoDaShi-3.8.0-portable.exe`。本轮因磁盘不足未打包、也未上传本机既有切片。Linux 可用 `npm run dist:linux` 打 AppImage。
+
+## 界面截图
+
+以下三张是本机已有的真实产品窗口截图，来自找货大师 e2e 验收目录（窗口标题显示 **v3.6**；当前 `package.json` 为 **3.8.0**，因此这不是 3.8.0 安装后的新截图）。文件时间约 2026-11-18。画面为主搜索台、跨平台搜索结果和商品对比；未包含登录态、验证码、账号或 API Key。平台 logo 不能代替这些界面图。
+
+![主搜索台](docs/screenshots/01-workbench.png)
+
+![跨平台搜索结果](docs/screenshots/02-results.png)
+
+![商品对比](docs/screenshots/03-compare-or-favorites.png)
+
 ## 功能特性
 
 - 在多个电商 / 采购平台之间切换搜索与比对。
@@ -9,7 +23,7 @@
 - 各平台登录会话分开持久化，数据保存在本机用户目录。若已有旧版 `%APPDATA%/维维找货`，会继续沿用（升级后登录与收藏不丢），否则使用 `%APPDATA%/找货大师`。
 - 3.8.0 增强了提取引擎（页面 JSON / 隐藏窗口网络拦截、无链接卡片保留、懒加载与 SPA 等待），并仅在有公开证据时修正搜索 URL。详见 [CHANGELOG-3.8.md](CHANGELOG-3.8.md)。
 
-本仓库**不包含安装包**，也**不声称**端到端测试已通过。登录墙、验证码或纯 App / 小程序站点不会被绕过；海外网络下部分国内站点可能只能拿到空壳页面。
+本仓库目前**没有**已发布安装包（无 GitHub Release），也**不声称**端到端测试已通过。登录墙、验证码或纯 App / 小程序站点不会被绕过；海外网络下部分国内站点可能只能拿到空壳页面。
 
 ## 技术栈
 
@@ -58,6 +72,20 @@ npm run dist:linux    # Linux AppImage
 # ZhaoHuo Dashi
 
 **3.8.0** · A desktop tool for one-click cross-platform product sourcing: search the same or alternative goods across multiple procurement and retail sites.
+
+### Download
+
+No published installer on GitHub Releases. Version **3.8.0**. Package with `npm run dist:win` (expected `ZhaoHuoDaShi-3.8.0-win-x64.exe` and `ZhaoHuoDaShi-3.8.0-portable.exe`) or `npm run dist:linux`. This pass did not build or upload packages (disk). Local older fragments were not published.
+
+### Screenshots
+
+These three images are existing real product-window captures from a ZhaoHuo Dashi e2e run (the window title shows **v3.6**; `package.json` is currently **3.8.0**, so these are not fresh 3.8.0 install shots). File dates are about 2026-11-18. They show the main search workbench, cross-platform results, and product compare. They do not include a signed-in session, captcha, account, or API key. Platform logos are not a substitute for product UI.
+
+![Main workbench](docs/screenshots/01-workbench.png)
+
+![Cross-platform results](docs/screenshots/02-results.png)
+
+![Product compare](docs/screenshots/03-compare-or-favorites.png)
 
 ## Features
 
