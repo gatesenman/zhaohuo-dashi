@@ -6,17 +6,15 @@
 
 当前 GitHub 上**没有**已发布安装包（无 Release）。`package.json` 版本为 **3.8.0**。Windows 打包可用 `npm run dist:win`，按配置预期产物为 `ZhaoHuoDaShi-3.8.0-win-x64.exe`（NSIS）与 `ZhaoHuoDaShi-3.8.0-portable.exe`。本轮因磁盘不足未打包、也未上传本机既有切片。Linux 可用 `npm run dist:linux` 打 AppImage。
 
-## 界面截图（待补真实图）
+## 界面截图
 
-仓库内的图片几乎都是 `src/assets/platforms/*.png` 平台 logo，以及 `build/icon.png`。**图标和 logo 不能代替产品界面截图。** 仓库与本机工作区均未找到真实产品窗口截图，因此**不**把 logo 或生成图嵌入 README 充数。
+以下三张是本机已有的真实产品窗口截图，来自找货大师 e2e 验收目录（窗口标题显示 **v3.6**；当前 `package.json` 为 **3.8.0**，因此这不是 3.8.0 安装后的新截图）。文件时间约 2026-11-18。画面为主搜索台、跨平台搜索结果和商品对比；未包含登录态、验证码、账号或 API Key。平台 logo 不能代替这些界面图。
 
-预留路径（待桌面在真实运行的应用中截取后再放入）：
+![主搜索台](docs/screenshots/01-workbench.png)
 
-- `docs/screenshots/01-workbench.png` — 主界面 / 搜索工作台
-- `docs/screenshots/02-results.png` — 跨平台搜索结果
-- `docs/screenshots/03-compare-or-favorites.png` — 比对或收藏（如界面提供）
+![跨平台搜索结果](docs/screenshots/02-results.png)
 
-截取说明见 [`docs/screenshots/README.md`](docs/screenshots/README.md)。请不要截到登录态、验证码、账号或 cookies；必要时先退出登录或使用空白会话。
+![商品对比](docs/screenshots/03-compare-or-favorites.png)
 
 ## 功能特性
 
@@ -79,9 +77,15 @@ npm run dist:linux    # Linux AppImage
 
 No published installer on GitHub Releases. Version **3.8.0**. Package with `npm run dist:win` (expected `ZhaoHuoDaShi-3.8.0-win-x64.exe` and `ZhaoHuoDaShi-3.8.0-portable.exe`) or `npm run dist:linux`. This pass did not build or upload packages (disk). Local older fragments were not published.
 
-### Screenshots (reserved)
+### Screenshots
 
-Images already in the repo are almost entirely platform logos under `src/assets/platforms/` plus `build/icon.png`. Logos are not product UI. No real window captures were found, so this README does **not** embed logos or generated images. Reserved paths: `docs/screenshots/01-workbench.png`, `02-results.png`, `03-compare-or-favorites.png`. See `docs/screenshots/README.md`. Do not capture logged-in sessions, captchas, or credentials.
+These three images are existing real product-window captures from a ZhaoHuo Dashi e2e run (the window title shows **v3.6**; `package.json` is currently **3.8.0**, so these are not fresh 3.8.0 install shots). File dates are about 2026-11-18. They show the main search workbench, cross-platform results, and product compare. They do not include a signed-in session, captcha, account, or API key. Platform logos are not a substitute for product UI.
+
+![Main workbench](docs/screenshots/01-workbench.png)
+
+![Cross-platform results](docs/screenshots/02-results.png)
+
+![Product compare](docs/screenshots/03-compare-or-favorites.png)
 
 ## Features
 
